@@ -38,38 +38,7 @@ export interface Genre {
 }
 
 // Default empty playlists — user will populate with real tracks from search/discover
-export const mockPlaylists: Playlist[] = [
-  {
-    id: 'pl1',
-    title: 'Chill Vibes 🌙',
-    description: 'Perfect for late night sessions',
-    coverUrl: 'https://e-cdns-images.dzcdn.net/images/misc/db7a604d9e7634a67d45cfc86b25e3de/500x500-000000-80-0-0.jpg',
-    tracks: [],
-    createdAt: '2026-04-01T00:00:00Z',
-    shareCode: 'VIBRA-CHILL42',
-    userId: 'system',
-  },
-  {
-    id: 'pl2',
-    title: 'Workout Energy 🔥',
-    description: 'Get pumped and stay motivated',
-    coverUrl: 'https://e-cdns-images.dzcdn.net/images/misc/a1a66dacaa0654de9c5c3c232e98a245/500x500-000000-80-0-0.jpg',
-    tracks: [],
-    createdAt: '2026-04-05T00:00:00Z',
-    shareCode: 'VIBRA-PUMP88',
-    userId: 'system',
-  },
-  {
-    id: 'pl3',
-    title: 'Sad Hours 💔',
-    description: 'When you need to feel the feels',
-    coverUrl: 'https://e-cdns-images.dzcdn.net/images/misc/1e621857b498e81aa1e038935e1af614/500x500-000000-80-0-0.jpg',
-    tracks: [],
-    createdAt: '2026-04-10T00:00:00Z',
-    shareCode: 'VIBRA-FEEL77',
-    userId: 'system',
-  },
-];
+export const mockPlaylists: Playlist[] = [];
 
 // No more fake mock tracks — all music comes from Deezer API now
 export const mockTracks: Track[] = [];

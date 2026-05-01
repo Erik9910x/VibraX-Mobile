@@ -212,63 +212,7 @@ export function PlaylistCard({ playlist }: { playlist: { id: string; title: stri
           </div>
         )}
 
-        {/* More Menu Toggle */}
-        <div className="absolute top-2 right-2 z-20" ref={menuRef}>
-          <button
-            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowMenu(!showMenu); }}
-            className={cn(
-              "w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 flex items-center justify-center backdrop-blur-md transition-all",
-              showMenu ? "ring-2 ring-[#fcd535]/40" : ""
-            )}
-          >
-            <MoreVertical className="w-4 h-4 text-white" />
-          </button>
-          
-          {showMenu && (
-            <div className="absolute right-0 top-full mt-1 w-48 py-1 rounded-xl bg-[#1e2329] border border-white/10 shadow-2xl z-50">
-              <button
-                onClick={(e) => { e.stopPropagation(); updatePlaylist(playlist.id, { isPinned: !playlist.isPinned }); setShowMenu(false); }}
-                className="w-full px-4 py-2 text-left text-sm text-white/80 hover:text-white hover:bg-white/[0.06] flex items-center gap-2"
-              >
-                <Pin className="w-4 h-4 text-[#fcd535]" />
-                {playlist.isPinned ? 'Unpin Playlist' : 'Pin Playlist'}
-              </button>
-              <button
-                onClick={(e) => { e.stopPropagation(); setIsEditing(true); setShowMenu(false); }}
-                className="w-full px-4 py-2 text-left text-sm text-white/80 hover:text-white hover:bg-white/[0.06] flex items-center gap-2"
-              >
-                <Edit2 className="w-4 h-4 text-blue-400" />
-                Rename (Quick)
-              </button>
-              <button
-                onClick={(e) => { 
-                  e.stopPropagation(); 
-                  navigator.clipboard.writeText(playlist.shareCode || ''); 
-                  alert('Share code copied: ' + playlist.shareCode);
-                  setShowMenu(false); 
-                }}
-                className="w-full px-4 py-2 text-left text-sm text-white/80 hover:text-white hover:bg-white/[0.06] flex items-center gap-2"
-              >
-                <Share2 className="w-4 h-4 text-green-400" />
-                Share Code
-              </button>
-              <div className="h-px w-full bg-white/10 my-1"></div>
-              <button
-                onClick={(e) => { 
-                  e.stopPropagation(); 
-                  if(confirm('Delete this playlist?')) deletePlaylist(playlist.id); 
-                  setShowMenu(false); 
-                }}
-                className="w-full px-4 py-2 text-left text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 flex items-center gap-2"
-              >
-                <Trash2 className="w-4 h-4" />
-                Delete
-              </button>
-            </div>
-          )}
-        </div>
-
-        {hovered && !showMenu && (
+        {hovered && (
           <motion.button
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}

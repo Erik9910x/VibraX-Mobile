@@ -14,6 +14,7 @@ interface PlayerState {
   isMuted: boolean;
   isShuffled: boolean;
   repeatMode: 'off' | 'all' | 'one';
+  showLyrics: boolean;
   
   setTrack: (track: Track) => void;
   setQueue: (tracks: Track[], startIndex?: number) => void;
@@ -28,6 +29,7 @@ interface PlayerState {
   toggleShuffle: () => void;
   toggleRepeat: () => void;
   setDuration: (d: number) => void;
+  setShowLyrics: (show: boolean) => void;
 }
 
 export const usePlayerStore = create<PlayerState>()(
@@ -43,6 +45,7 @@ export const usePlayerStore = create<PlayerState>()(
       isMuted: false,
       isShuffled: false,
       repeatMode: 'off',
+      showLyrics: false,
 
       setTrack: (track) => {
         set({ currentTrack: track, isPlaying: true, progress: 0, duration: track.duration });
@@ -68,23 +71,44 @@ export const usePlayerStore = create<PlayerState>()(
       togglePlay: () => set((s) => ({ isPlaying: !s.isPlaying })),
 
       next: () => {
-        const { queue, queueIndex, repeatMode } = get();
+        const { queue, queueIndex, repeatMode, isShuffled } = get();
         if (queue.length === 0) return;
-        let nextIndex = queueIndex + 1;
-        if (nextIndex >= queue.length) {
-          if (repeatMode === 'all') nextIndex = 0;
-          else { set({ isPlaying: false }); return; }
+        
+        let nextIndex;
+        if (isShuffled && queue.length > 1) {
+          // Simple shuffle: pick any other track
+          nextIndex = queueIndex;
+          while (nextIndex === queueIndex) {
+            nextIndex = Math.floor(Math.random() * queue.length);
+          }
+        } else {
+          nextIndex = queueIndex + 1;
+          if (nextIndex >= queue.length) {
+            if (repeatMode === 'all') nextIndex = 0;
+            else { set({ isPlaying: false }); return; }
+          }
         }
+        
         const track = queue[nextIndex];
         set({ queueIndex: nextIndex, currentTrack: track, progress: 0, duration: track.duration, isPlaying: true });
         useHistoryStore.getState().addToHistory(track);
       },
 
       previous: () => {
-        const { queue, queueIndex, progress } = get();
+        const { queue, queueIndex, progress, isShuffled } = get();
         if (progress > 3) { set({ progress: 0 }); return; }
         if (queue.length === 0) return;
-        const prevIndex = queueIndex > 0 ? queueIndex - 1 : queue.length - 1;
+        
+        let prevIndex;
+        if (isShuffled && queue.length > 1) {
+          prevIndex = queueIndex;
+          while (prevIndex === queueIndex) {
+            prevIndex = Math.floor(Math.random() * queue.length);
+          }
+        } else {
+          prevIndex = queueIndex > 0 ? queueIndex - 1 : queue.length - 1;
+        }
+        
         const track = queue[prevIndex];
         set({ queueIndex: prevIndex, currentTrack: track, progress: 0, duration: track.duration, isPlaying: true });
       },
@@ -97,6 +121,7 @@ export const usePlayerStore = create<PlayerState>()(
         repeatMode: s.repeatMode === 'off' ? 'all' : s.repeatMode === 'all' ? 'one' : 'off',
       })),
       setDuration: (d) => set({ duration: d }),
+      setShowLyrics: (show) => set({ showLyrics: show }),
     }),
     { 
       name: 'vibrax-player',
@@ -107,7 +132,8 @@ export const usePlayerStore = create<PlayerState>()(
         isShuffled: state.isShuffled,
         repeatMode: state.repeatMode,
         queue: state.queue,
-        queueIndex: state.queueIndex
+        queueIndex: state.queueIndex,
+        showLyrics: state.showLyrics
       })
     }
   )
@@ -146,8 +172,21 @@ export const usePlaylistStore = create<PlaylistState>()(
 
       initDefaults: (defaults) => {
         const state = get() as any;
-        if (!state._defaultsLoaded && state.playlists.length === 0) {
-          set({ playlists: defaults, _defaultsLoaded: true } as any);
+        // Aggressively filter out any legacy 'system' or mock playlists (pl1, pl2, pl3)
+        // Also filter out any playlist with 'sex' in the title if it's potentially mock data
+        const filteredPlaylists = state.playlists.filter((p: any) => 
+          p.userId !== 'system' && 
+          !['pl1', 'pl2', 'pl3'].includes(p.id) &&
+          !p.title.toLowerCase().includes('sex')
+        );
+        
+        if (!state._defaultsLoaded) {
+          set({ 
+            playlists: [...filteredPlaylists, ...defaults.filter((d: any) => !filteredPlaylists.some((p: any) => p.id === d.id))], 
+            _defaultsLoaded: true 
+          } as any);
+        } else if (state.playlists.length !== filteredPlaylists.length) {
+          set({ playlists: filteredPlaylists });
         }
       },
 

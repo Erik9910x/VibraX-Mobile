@@ -3,7 +3,7 @@
 import { useParams, useRouter } from 'next/navigation';
 import { usePlaylistStore, usePlayerStore } from '@/lib/store';
 import { TrackRow } from '@/components/cards/Cards';
-import { Play, Shuffle, Share2, Copy, Check, Trash2, Edit3, ArrowLeft, Camera, MoreHorizontal, Pin, Edit2 } from 'lucide-react';
+import { Play, Shuffle, Share2, Copy, Check, Trash2, Edit3, ArrowLeft, Camera, MoreVertical, Pin, Edit2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState, useMemo, use, useRef, useEffect } from 'react';
 
@@ -197,14 +197,14 @@ export default function PlaylistDetailPage({ params }: { params: Promise<{ id: s
           </button>
           <div className="relative" ref={menuRef}>
             <button
-              onClick={() => setShowMenu(!showMenu)}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowMenu(!showMenu); }}
               className="w-10 h-10 rounded-full bg-white/[0.06] hover:bg-white/[0.1] flex items-center justify-center transition-colors"
             >
-              <MoreHorizontal className="w-4 h-4 text-white/60" />
+              <MoreVertical className="w-4 h-4 text-white/60" />
             </button>
             
             {showMenu && (
-              <div className="absolute left-0 top-full mt-2 w-48 py-1 rounded-xl bg-[#1e2329] border border-white/10 shadow-2xl z-50">
+              <div className="absolute right-0 top-full mt-2 w-48 py-1 rounded-xl bg-[#1e2329] border border-[#fcd535]/30 shadow-[0_10px_40px_rgba(0,0,0,0.5)] z-[100]">
                 <button
                   onClick={() => { updatePlaylist(playlist.id, { isPinned: !playlist.isPinned }); setShowMenu(false); }}
                   className="w-full px-4 py-2 text-left text-sm text-white/80 hover:text-white hover:bg-white/[0.06] flex items-center gap-2"
@@ -226,18 +226,16 @@ export default function PlaylistDetailPage({ params }: { params: Promise<{ id: s
                   <Share2 className="w-4 h-4 text-green-400" />
                   Share Playlist
                 </button>
-                {playlist.userId !== 'system' && (
-                  <>
-                    <div className="h-px w-full bg-white/10 my-1"></div>
-                    <button
-                      onClick={() => { handleDelete(); setShowMenu(false); }}
-                      className="w-full px-4 py-2 text-left text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 flex items-center gap-2"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                      Delete
-                    </button>
-                  </>
-                )}
+                <button
+                  onClick={() => { 
+                    handleDelete();
+                    setShowMenu(false);
+                  }}
+                  className="w-full px-4 py-2 text-left text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 flex items-center gap-2"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  Delete Album
+                </button>
               </div>
             )}
           </div>
@@ -246,7 +244,6 @@ export default function PlaylistDetailPage({ params }: { params: Promise<{ id: s
 
       {/* Track List */}
       <div className="px-6 mt-4">
-        {/* Column headers */}
         <div className="flex items-center gap-3 px-4 py-2 text-xs text-white/30 uppercase tracking-wider border-b border-white/[0.06] mb-2">
           <span className="w-8 text-center">#</span>
           <span className="w-10" />

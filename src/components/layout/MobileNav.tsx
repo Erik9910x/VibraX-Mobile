@@ -17,7 +17,7 @@ export default function MobileNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#181a20]/90 backdrop-blur-xl border-t border-white/[0.04] px-2 pb-safe pt-2 flex items-center justify-around h-[72px]">
+    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#181a20]/90 backdrop-blur-xl border-t border-white/[0.04] px-2 pt-2 flex items-center justify-around h-[calc(72px+var(--safe-area-bottom))] pb-[var(--safe-area-bottom)]">
       {navItems.map((item) => {
         const isActive = item.href === '/app' 
           ? pathname === '/app'

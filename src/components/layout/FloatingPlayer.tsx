@@ -4,7 +4,7 @@ import { useEffect, useRef, useCallback, useState } from 'react';
 import {
   Play, Pause, SkipBack, SkipForward, Volume2, VolumeX,
   Repeat, Repeat1, Shuffle, Heart, Mic2, Download, X,
-  RotateCcw, RotateCw, ChevronDown, User, Menu, Music
+  RotateCcw, RotateCw, ChevronDown, User, Menu, Music, Loader2
 } from 'lucide-react';
 import { usePlayerStore, useFavoritesStore } from '@/lib/store';
 import { formatTime, cn } from '@/lib/utils';
@@ -12,12 +12,25 @@ import { getLyrics, parseSyncedLyrics, ParsedLyricLine } from '@/lib/lyrics';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => void }) {
-  const {
-    currentTrack, isPlaying, volume, isMuted, progress, duration,
-    isShuffled, repeatMode,
-    togglePlay, next, previous, setVolume, toggleMute,
-    setProgress, toggleShuffle, toggleRepeat,
-  } = usePlayerStore();
+  const currentTrack = usePlayerStore(s => s.currentTrack);
+  const isPlaying = usePlayerStore(s => s.isPlaying);
+  const volume = usePlayerStore(s => s.volume);
+  const isMuted = usePlayerStore(s => s.isMuted);
+  const progress = usePlayerStore(s => s.progress);
+  const duration = usePlayerStore(s => s.duration);
+  const isShuffled = usePlayerStore(s => s.isShuffled);
+  const repeatMode = usePlayerStore(s => s.repeatMode);
+  const showLyrics = usePlayerStore(s => s.showLyrics);
+  
+  const togglePlay = usePlayerStore(s => s.togglePlay);
+  const next = usePlayerStore(s => s.next);
+  const previous = usePlayerStore(s => s.previous);
+  const setVolume = usePlayerStore(s => s.setVolume);
+  const toggleMute = usePlayerStore(s => s.toggleMute);
+  const setProgress = usePlayerStore(s => s.setProgress);
+  const toggleShuffle = usePlayerStore(s => s.toggleShuffle);
+  const toggleRepeat = usePlayerStore(s => s.toggleRepeat);
+  const setShowLyrics = usePlayerStore(s => s.setShowLyrics);
 
   const { isFavorite, toggleFavorite } = useFavoritesStore();
   const progressRef = useRef<HTMLDivElement>(null);
@@ -25,12 +38,12 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Full-Screen Lyrics State
-  const [showLyrics, setShowLyrics] = useState(false);
+  // Full-Screen Lyrics State (using store)
   const [lyrics, setLyrics] = useState<ParsedLyricLine[]>([]);
   const [plainLyrics, setPlainLyrics] = useState<string | null>(null);
   const [lyricsLoading, setLyricsLoading] = useState(false);
   const [activeLyricIndex, setActiveLyricIndex] = useState(-1);
+  const [isDownloading, setIsDownloading] = useState(false);
   const lyricsContainerRef = useRef<HTMLDivElement>(null);
   
   // Initialize and clean up Audio
@@ -107,6 +120,11 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
       artist: currentTrack.artist,
       album: currentTrack.album || 'VibraX',
       artwork: [
+        { src: currentTrack.imageUrl, sizes: '96x96', type: 'image/jpeg' },
+        { src: currentTrack.imageUrl, sizes: '128x128', type: 'image/jpeg' },
+        { src: currentTrack.imageUrl, sizes: '192x192', type: 'image/jpeg' },
+        { src: currentTrack.imageUrl, sizes: '256x256', type: 'image/jpeg' },
+        { src: currentTrack.imageUrl, sizes: '384x384', type: 'image/jpeg' },
         { src: currentTrack.imageUrl, sizes: '512x512', type: 'image/jpeg' },
       ],
     });
@@ -115,6 +133,8 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
     navigator.mediaSession.setActionHandler('pause', () => { togglePlay(); });
     navigator.mediaSession.setActionHandler('previoustrack', () => { previous(); });
     navigator.mediaSession.setActionHandler('nexttrack', () => { next(); });
+    navigator.mediaSession.setActionHandler('seekbackward', () => skipTime(-15));
+    navigator.mediaSession.setActionHandler('seekforward', () => skipTime(15));
     navigator.mediaSession.setActionHandler('seekto', (details) => {
       if (details.seekTime != null && audioRef.current) {
         audioRef.current.currentTime = details.seekTime;
@@ -130,6 +150,13 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
       navigator.mediaSession.setActionHandler('seekto', null);
     };
   }, [currentTrack, togglePlay, next, previous, setProgress]);
+
+  // Sync MediaSession playback state
+  useEffect(() => {
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.playbackState = isPlaying ? 'playing' : 'paused';
+    }
+  }, [isPlaying]);
 
   // Update Page Title when playing
   useEffect(() => {
@@ -275,7 +302,7 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
       switch (e.code) {
         case 'Space': e.preventDefault(); togglePlay(); break;
         case 'KeyM': e.preventDefault(); toggleMute(); break;
-        case 'KeyL': e.preventDefault(); if (currentTrack) setShowLyrics(s => !s); break;
+        case 'KeyL': e.preventDefault(); if (currentTrack) setShowLyrics(!showLyrics); break;
         case 'ArrowRight': e.preventDefault(); skipTime(15); break;
         case 'ArrowLeft': e.preventDefault(); skipTime(-15); break;
       }
@@ -350,17 +377,30 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
   }, [duration, currentTrack?.previewUrl, setProgress]);
 
   // Download directly via Proxy API to force attachment
-  const handleDownload = () => {
-    const src = audioRef.current?.src || currentTrack?.previewUrl;
-    if (!src || !currentTrack) return;
-    const downloadUrl = `/api/download?url=${encodeURIComponent(src)}&filename=${encodeURIComponent(`${currentTrack.artist} - ${currentTrack.title}.mp3`)}`;
-    
-    const a = document.createElement('a');
-    a.href = downloadUrl;
-    a.download = `${currentTrack.artist} - ${currentTrack.title}.mp3`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+  const handleDownload = async () => {
+    if (!currentTrack || isDownloading) return;
+    setIsDownloading(true);
+    try {
+      const res = await fetch(`/api/music/upgrade?title=${encodeURIComponent(currentTrack.title)}&artist=${encodeURIComponent(currentTrack.artist)}`);
+      const data = await res.json();
+      if (data.url) {
+        const link = document.createElement('a');
+        link.href = data.url;
+        link.download = `${currentTrack.title} - ${currentTrack.artist}.mp3`;
+        // Use blank target to force download if blob isn't possible across origins
+        link.target = '_blank'; 
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } else {
+        alert('Could not find a downloadable version for this track.');
+      }
+    } catch (e) {
+      console.error('Download failed:', e);
+      alert('Download failed. Please try again.');
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   if (!currentTrack) {
@@ -384,7 +424,7 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 100 }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-40 bg-gradient-to-br from-gray-900 to-black pb-[calc(var(--player-height)+72px)] lg:pb-[var(--player-height)] flex flex-col md:flex-row overflow-hidden"
+            className="fixed inset-0 z-40 bg-gradient-to-br from-gray-900 to-black pb-[var(--player-height)] flex flex-col md:flex-row overflow-hidden"
           >
             {/* Background Blur Effect */}
             <div 
@@ -392,10 +432,10 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
               style={{ backgroundImage: `url(${currentTrack.imageUrl})`, backgroundPosition: 'center', backgroundSize: 'cover' }} 
             />
 
-            {/* Top Close Button */}
+            {/* Top Close Button (Desktop Only) */}
             <button 
               onClick={() => setShowLyrics(false)} 
-              className="absolute top-6 left-6 z-50 w-10 h-10 bg-black/40 hover:bg-black/80 backdrop-blur-md rounded-full flex flex-col items-center justify-center text-white/70 hover:text-white transition-all shadow-xl group"
+              className="hidden md:flex absolute top-6 left-6 z-50 w-10 h-10 bg-black/40 hover:bg-black/80 backdrop-blur-md rounded-full flex-col items-center justify-center text-white/70 hover:text-white transition-all shadow-xl group"
             >
               <ChevronDown className="w-6 h-6 group-hover:translate-y-0.5 transition-transform" />
             </button>
@@ -417,7 +457,7 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
               </div>
             </div>
 
-            {/* Mobile-only: compact track info bar at top */}
+            {/* Mobile-only: compact track info bar at top with exit button */}
             <div className="flex md:hidden items-center gap-3 px-6 pt-16 pb-4 relative z-10">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={currentTrack.imageUrl} alt="" className="w-12 h-12 rounded-lg object-cover shadow-lg" />
@@ -425,6 +465,12 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
                 <p className="text-base font-bold text-white truncate">{currentTrack.title}</p>
                 <p className="text-sm text-white/40 truncate">{currentTrack.artist}</p>
               </div>
+              <button 
+                onClick={() => setShowLyrics(false)}
+                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white/70 active:scale-90 transition-transform"
+              >
+                <ChevronDown className="w-6 h-6" />
+              </button>
             </div>
 
             {/* Lyrics Column: full width on mobile, half on tablet+ */}
@@ -485,7 +531,12 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
       </AnimatePresence>
 
       {/* Main Bottom Player Bar */}
-      <div className="fixed bottom-[72px] lg:bottom-0 left-0 right-0 h-[var(--player-height)] bg-[#181a20]/98 backdrop-blur-2xl border-t border-white/[0.06] z-50 overflow-visible">
+      <div className={cn(
+        "fixed left-0 right-0 bg-[#181a20]/98 backdrop-blur-2xl border-t border-white/[0.06] z-50 overflow-visible transition-all duration-300",
+        showLyrics 
+          ? "bottom-0 h-[calc(var(--player-height)+var(--safe-area-bottom))] pb-[var(--safe-area-bottom)]" 
+          : "bottom-[calc(72px+var(--safe-area-bottom))] lg:bottom-0 h-[var(--player-height)]"
+      )}>
         {/* Subtle animated gradient background */}
         <div className="absolute inset-0 opacity-30 pointer-events-none"
           style={{
@@ -494,14 +545,22 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
           }}
         />
 
-        {/* Progress Seeker Bar - Spotify style thin line */}
+        {/* Seeker Bar - Prominent YouTube style */}
         <div
           ref={progressRef}
-          className="absolute top-0 left-0 right-0 h-1 -translate-y-[1px] bg-white/[0.06] cursor-pointer group z-50 hover:h-1.5 transition-[height] duration-150"
+          className="absolute top-0 left-0 right-0 h-1.5 -translate-y-[1px] bg-white/[0.08] cursor-pointer group z-50 hover:h-2 transition-[height] duration-200"
           onClick={handleProgressClick}
         >
-          <div className="h-full bg-[#fcd535] relative transition-[width] duration-75 ease-linear" style={{ width: `${progressPercent}%` }}>
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-white opacity-0 group-hover:opacity-100 transition-opacity shadow-lg" />
+          {/* Buffering/Background bar */}
+          <div className="absolute inset-0 bg-white/[0.05]" />
+          
+          {/* Progress fill */}
+          <div 
+            className="h-full bg-gradient-to-r from-[#fcd535] to-[#fcd535] relative shadow-[0_0_8px_rgba(252,213,53,0.4)]" 
+            style={{ width: `${progressPercent}%`, transition: 'width 0.1s linear' }}
+          >
+            {/* Knob */}
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white scale-0 group-hover:scale-100 transition-transform shadow-xl border-2 border-[#fcd535]" />
           </div>
         </div>
 
@@ -572,22 +631,26 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
           {/* Right: Extras */}
           <div className="flex items-center justify-end gap-1.5 sm:gap-2 w-[30%] sm:w-[25%]">
             <button
-              onClick={() => setShowLyrics(s => !s)}
+              onClick={handleDownload}
+              disabled={isDownloading}
               className={cn(
-                'w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all',
-                showLyrics ? 'text-black bg-[#fcd535]' : 'text-white/30 hover:text-white/60'
+                'flex w-7 h-7 sm:w-8 sm:h-8 items-center justify-center rounded-full transition-all',
+                isDownloading ? 'text-[#fcd535] animate-pulse' : 'text-white/30 hover:text-white/80 hover:bg-white/5'
               )}
-              title="Lyrics (L)"
+              title="Download Fulltrack"
             >
-              <Mic2 className="w-4 h-4" />
+              {isDownloading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
             </button>
 
             <button
-              onClick={handleDownload}
-              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-white/30 hover:text-white/60 transition-colors hidden sm:flex"
-              title="Download"
+              onClick={() => setShowLyrics(!showLyrics)}
+              className={cn(
+                'flex w-7 h-7 sm:w-8 sm:h-8 items-center justify-center rounded-full transition-all',
+                showLyrics ? 'text-[#fcd535] bg-[#fcd535]/10 shadow-[0_0_12px_rgba(252,213,53,0.2)]' : 'text-white/30 hover:text-white/80 hover:bg-white/5'
+              )}
+              title="Lyrics"
             >
-              <Download className="w-4 h-4" />
+              <Mic2 className="w-4 h-4" />
             </button>
 
             {/* Volume Control */}

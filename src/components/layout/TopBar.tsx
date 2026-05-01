@@ -45,7 +45,7 @@ export default function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
   }, []);
 
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between h-[var(--topbar-height)] px-4 sm:px-6 bg-[#0a1628]/80 backdrop-blur-xl border-b border-white/[0.04]">
+    <header className="sticky top-0 z-30 flex items-center justify-between h-[calc(var(--topbar-height)+var(--safe-area-top))] pt-[var(--safe-area-top)] px-4 sm:px-6 bg-[#181a20]/80 backdrop-blur-xl border-b border-white/[0.04]">
       {/* Left side */}
       <div className="flex items-center gap-2">
         {/* Mobile menu */}
@@ -89,10 +89,10 @@ export default function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
         </a>
         <button
           onClick={() => setShowDonation(true)}
-          className="hidden sm:flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#fcd535] hover:bg-[#f0b90b] transition-colors shadow-lg shadow-[#fcd535]/20"
+          className="flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-[#fcd535] hover:bg-[#f0b90b] transition-all shadow-lg shadow-[#fcd535]/20 active:scale-95 z-50"
         >
           <Heart className="w-4 h-4 text-black fill-black" />
-          <span className="text-sm font-bold text-black">Support Us</span>
+          <span className="text-xs sm:text-sm font-bold text-black uppercase tracking-tight sm:tracking-normal notranslate">Support Us</span>
         </button>
 
         <div className="relative" ref={langRef}>

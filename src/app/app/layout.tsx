@@ -4,7 +4,8 @@ import Sidebar from '@/components/layout/Sidebar';
 import TopBar from '@/components/layout/TopBar';
 import FloatingPlayer from '@/components/layout/FloatingPlayer';
 import MobileNav from '@/components/layout/MobileNav';
-import { usePlaylistStore } from '@/lib/store';
+import { usePlaylistStore, usePlayerStore } from '@/lib/store';
+import { cn } from '@/lib/utils';
 import { mockPlaylists } from '@/data/mockData';
 import { useEffect, useState } from 'react';
 
@@ -27,20 +28,27 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     }
   }, [initDefaults]);
 
+  const { showLyrics } = usePlayerStore();
+
   return (
     <div className="h-screen flex flex-col overflow-hidden bg-[var(--bg-primary)]">
       <div id="google_translate_element" className="hidden"></div>
       
       <Sidebar collapsed={!sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
       
-      <div className="flex-1 flex flex-col lg:ml-[280px] pb-[calc(var(--player-height)+72px)] lg:pb-[var(--player-height)] overflow-hidden transition-[margin] duration-300">
+      <div className={cn(
+        "flex-1 flex flex-col lg:ml-[280px] overflow-hidden transition-all duration-300",
+        showLyrics 
+          ? "pb-[calc(var(--player-height)+var(--safe-area-bottom))]" 
+          : "pb-[calc(var(--player-height)+72px+var(--safe-area-bottom))] lg:pb-[var(--player-height)]"
+      )}>
         <TopBar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
         <main className="flex-1 overflow-y-auto">
           {children}
         </main>
       </div>
       
-      <MobileNav />
+      {!showLyrics && <MobileNav />}
       <FloatingPlayer />
     </div>
   );

@@ -92,59 +92,7 @@ function SidebarPlaylistItem({ playlist, pathname, onToggle }: any) {
         </Link>
       )}
 
-      {/* More Menu */}
-      <div className="relative flex-shrink-0" ref={menuRef}>
-        <button
-          onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowMenu(!showMenu); }}
-          className={cn(
-            "w-7 h-7 rounded-md flex items-center justify-center transition-all",
-            showMenu ? "bg-white/10" : "hover:bg-white/10"
-          )}
-        >
-          <MoreVertical className="w-4 h-4 text-white/50 hover:text-white" />
-        </button>
-        
-        {showMenu && (
-          <div className="absolute right-0 top-full mt-1 w-48 py-1 rounded-xl bg-[#1e2329] border border-white/10 shadow-2xl z-50">
-            <button
-              onClick={() => { updatePlaylist(playlist.id, { isPinned: !playlist.isPinned }); setShowMenu(false); }}
-              className="w-full px-4 py-2 text-left text-sm text-white/80 hover:text-white hover:bg-white/[0.06] flex items-center gap-2"
-            >
-              <Pin className="w-4 h-4 text-[#fcd535]" />
-              {playlist.isPinned ? 'Unpin' : 'Pin'}
-            </button>
-            <button
-              onClick={() => { setIsEditing(true); setShowMenu(false); }}
-              className="w-full px-4 py-2 text-left text-sm text-white/80 hover:text-white hover:bg-white/[0.06] flex items-center gap-2"
-            >
-              <Edit2 className="w-4 h-4 text-blue-400" />
-              Rename (Quick)
-            </button>
-            <button
-              onClick={() => { 
-                navigator.clipboard.writeText(playlist.shareCode || ''); 
-                alert('Share code copied: ' + playlist.shareCode);
-                setShowMenu(false); 
-              }}
-              className="w-full px-4 py-2 text-left text-sm text-white/80 hover:text-white hover:bg-white/[0.06] flex items-center gap-2"
-            >
-              <Share2 className="w-4 h-4 text-green-400" />
-              Share
-            </button>
-            <div className="h-px w-full bg-white/10 my-1"></div>
-            <button
-              onClick={() => { 
-                if(confirm('Delete this playlist?')) deletePlaylist(playlist.id); 
-                setShowMenu(false); 
-              }}
-              className="w-full px-4 py-2 text-left text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 flex items-center gap-2"
-            >
-              <Trash2 className="w-4 h-4" />
-              Delete
-            </button>
-          </div>
-        )}
-      </div>
+      {/* Removed redundant More Menu from Sidebar as per user request */}
     </div>
   );
 }
@@ -167,10 +115,10 @@ export default function Sidebar({ collapsed, onToggle }: { collapsed: boolean; o
 
       <aside
         className={cn(
-          'fixed left-0 top-0 h-[calc(100vh-var(--player-height))] z-40 flex flex-col transition-all duration-300 ease-out',
+          'fixed left-0 top-0 h-screen lg:h-[calc(100vh-var(--player-height))] z-40 flex flex-col transition-all duration-300 ease-out',
           'bg-[var(--bg-secondary)] border-r border-[var(--border)]',
           // Mobile: hidden by default, shown as overlay
-          'max-lg:-translate-x-full max-lg:w-[280px]',
+          'max-lg:-translate-x-full max-lg:w-[280px] max-lg:pt-[var(--safe-area-top)]',
           !collapsed && 'max-lg:translate-x-0',
           // Desktop: always visible
           'lg:translate-x-0 lg:w-[280px]'
