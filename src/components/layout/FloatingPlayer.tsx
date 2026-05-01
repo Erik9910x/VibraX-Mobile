@@ -132,7 +132,7 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
     });
 
     // Update position state for seek bar on lock screen
-    if ('setPositionState' in navigator.mediaSession) {
+    if ('setPositionState' in navigator.mediaSession && !isNaN(duration) && !isNaN(progress)) {
       navigator.mediaSession.setPositionState({
         duration: duration || 0,
         playbackRate: 1,
@@ -176,7 +176,7 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
       navigator.mediaSession.playbackState = isPlaying ? 'playing' : 'paused';
       
       // Update position state periodically to keep it synced
-      if (isPlaying && duration > 0 && 'setPositionState' in navigator.mediaSession) {
+      if (isPlaying && duration > 0 && !isNaN(duration) && !isNaN(progress) && 'setPositionState' in navigator.mediaSession) {
         navigator.mediaSession.setPositionState({
           duration: duration,
           playbackRate: 1,
