@@ -236,19 +236,26 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
     const onEnded = () => {
       const state = usePlayerStore.getState();
       if (state.repeatMode === 'one') {
+        // For Repeat One, we just reset and play again
         audio.currentTime = 0;
-        audio.play().catch(() => {});
         setProgress(0);
-      } else {
-        next();
-        // If the track is the same (e.g. single track queue in Repeat All), next() won't trigger the track change effect.
-        // We need to manually restart it.
-        const newState = usePlayerStore.getState();
-        if (newState.currentTrack?.id === state.currentTrack?.id) {
-          audio.currentTime = 0;
+        setTimeout(() => {
           audio.play().catch(() => {});
-          setProgress(0);
-        }
+        }, 100);
+      } else {
+        // For Repeat All or Off
+        next();
+        
+        // Safety: If next() didn't change the track (e.g. single track queue with Repeat All)
+        // we need to manually restart the audio since the track effect won't trigger.
+        setTimeout(() => {
+          const newState = usePlayerStore.getState();
+          if (newState.currentTrack?.id === state.currentTrack?.id) {
+            audio.currentTime = 0;
+            setProgress(0);
+            audio.play().catch(() => {});
+          }
+        }, 100);
       }
     };
     
