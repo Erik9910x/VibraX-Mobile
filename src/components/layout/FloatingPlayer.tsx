@@ -421,14 +421,9 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
       const res = await fetch(`/api/music/upgrade?title=${encodeURIComponent(currentTrack.title)}&artist=${encodeURIComponent(currentTrack.artist)}`);
       const data = await res.json();
       if (data.url) {
-        const link = document.createElement('a');
-        link.href = data.url;
-        link.download = `${currentTrack.title} - ${currentTrack.artist}.mp3`;
-        // Use blank target to force download if blob isn't possible across origins
-        link.target = '_blank'; 
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        const filename = `${currentTrack.title} - ${currentTrack.artist}.mp3`;
+        // Use our server-side download proxy to force iOS to download
+        window.location.href = `/api/music/download?url=${encodeURIComponent(data.url)}&filename=${encodeURIComponent(filename)}`;
       } else {
         alert('Could not find a downloadable version for this track.');
       }
