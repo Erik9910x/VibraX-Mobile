@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import { usePlayerStore, usePlaylistStore, useFavoritesStore, useHistoryStore, useArtistStore } from '@/lib/store';
-import { User, Music, Heart, ListMusic, History, Settings, ChevronRight, Share2, Shield, Info, LogOut, Disc, Headphones, TrendingUp, Globe, Zap, Trash2, X } from 'lucide-react';
+import { User, Music, Heart, ListMusic, History, Settings, ChevronRight, Share2, Shield, Info, LogOut, Disc, Headphones, TrendingUp, Globe, Zap, Trash2, X, Smartphone, Tablet, Download } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
@@ -283,6 +283,45 @@ export default function ProfilePage() {
                 <Trash2 className="w-3 h-3" />
                 Clear Cache
               </button>
+            </div>
+
+            {/* iOS/iPadOS Profile Installation */}
+            <div className="p-6 rounded-3xl bg-white/[0.03] border border-white/[0.05] relative overflow-hidden group">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex -space-x-2">
+                  <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
+                    <Smartphone className="w-5 h-5 text-blue-400" />
+                  </div>
+                  <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
+                    <Tablet className="w-5 h-5 text-purple-400" />
+                  </div>
+                </div>
+                <div className="px-2 py-1 rounded bg-[#fcd535]/10 text-[10px] font-bold text-[#fcd535] uppercase tracking-widest">Recommended</div>
+              </div>
+              <h3 className="text-lg font-bold text-white mb-1">VibraX for iOS & iPadOS</h3>
+              <p className="text-white/40 text-xs mb-4 leading-relaxed">
+                Install VibraX as a full-screen app with background playback support. 
+                Requires Apple Configuration Profile.
+              </p>
+              
+              <a 
+                href="/vibrax.mobileconfig" 
+                download="vibrax.mobileconfig"
+                className="w-full py-3 rounded-xl bg-[#fcd535] hover:bg-[#fcd535]/90 text-[#181a20] text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#fcd535]/10"
+              >
+                <Download className="w-4 h-4" />
+                Download Profile
+              </a>
+              
+              <div className="mt-4 p-3 rounded-xl bg-white/[0.02] border border-white/[0.05]">
+                <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-2">How to install:</p>
+                <ol className="text-[10px] text-white/50 space-y-1 list-decimal pl-4 font-medium">
+                  <li>Download the profile above</li>
+                  <li>Open <b>Settings</b> on your device</li>
+                  <li>Tap <b>Profile Downloaded</b> at the top</li>
+                  <li>Tap <b>Install</b> and confirm</li>
+                </ol>
+              </div>
             </div>
 
             {/* Promo Card */}

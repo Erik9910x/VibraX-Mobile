@@ -4,7 +4,7 @@ import os
 
 # Configuration
 APP_NAME = "VibraX"
-APP_URL = "https://vibraxmusic.vercel.app/app"
+APP_URL = "https://vibraxmb.vercel.app/"
 ICON_PATH = "public/icon-512.png"
 ORGANIZATION = "VibraX Music"
 
@@ -75,7 +75,7 @@ def create_mobileconfig():
 </plist>
 """
     
-    output_file = "vibrax.mobileconfig"
+    output_file = "public/vibrax.mobileconfig"
     with open(output_file, "w", encoding="utf-8") as f:
         f.write(template)
     
