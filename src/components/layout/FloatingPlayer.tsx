@@ -115,19 +115,30 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
   useEffect(() => {
     if (!currentTrack || !('mediaSession' in navigator)) return;
     
+    const artwork = currentTrack.imageUrl ? [
+      { src: currentTrack.imageUrl, sizes: '96x96', type: 'image/jpeg' },
+      { src: currentTrack.imageUrl, sizes: '128x128', type: 'image/jpeg' },
+      { src: currentTrack.imageUrl, sizes: '192x192', type: 'image/jpeg' },
+      { src: currentTrack.imageUrl, sizes: '256x256', type: 'image/jpeg' },
+      { src: currentTrack.imageUrl, sizes: '384x384', type: 'image/jpeg' },
+      { src: currentTrack.imageUrl, sizes: '512x512', type: 'image/jpeg' },
+    ] : [];
+
     navigator.mediaSession.metadata = new MediaMetadata({
       title: currentTrack.title,
       artist: currentTrack.artist,
       album: currentTrack.album || 'VibraX',
-      artwork: [
-        { src: currentTrack.imageUrl, sizes: '96x96', type: 'image/jpeg' },
-        { src: currentTrack.imageUrl, sizes: '128x128', type: 'image/jpeg' },
-        { src: currentTrack.imageUrl, sizes: '192x192', type: 'image/jpeg' },
-        { src: currentTrack.imageUrl, sizes: '256x256', type: 'image/jpeg' },
-        { src: currentTrack.imageUrl, sizes: '384x384', type: 'image/jpeg' },
-        { src: currentTrack.imageUrl, sizes: '512x512', type: 'image/jpeg' },
-      ],
+      artwork: artwork,
     });
+
+    // Update position state for seek bar on lock screen
+    if ('setPositionState' in navigator.mediaSession) {
+      navigator.mediaSession.setPositionState({
+        duration: duration || 0,
+        playbackRate: 1,
+        position: progress || 0,
+      });
+    }
 
     navigator.mediaSession.setActionHandler('play', () => { togglePlay(); });
     navigator.mediaSession.setActionHandler('pause', () => { togglePlay(); });
@@ -139,6 +150,14 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
       if (details.seekTime != null && audioRef.current) {
         audioRef.current.currentTime = details.seekTime;
         setProgress(details.seekTime);
+        // Force update media session position
+        if ('setPositionState' in navigator.mediaSession) {
+          navigator.mediaSession.setPositionState({
+            duration: audioRef.current.duration,
+            playbackRate: 1,
+            position: details.seekTime
+          });
+        }
       }
     });
 
@@ -155,8 +174,17 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
   useEffect(() => {
     if ('mediaSession' in navigator) {
       navigator.mediaSession.playbackState = isPlaying ? 'playing' : 'paused';
+      
+      // Update position state periodically to keep it synced
+      if (isPlaying && duration > 0 && 'setPositionState' in navigator.mediaSession) {
+        navigator.mediaSession.setPositionState({
+          duration: duration,
+          playbackRate: 1,
+          position: progress,
+        });
+      }
     }
-  }, [isPlaying]);
+  }, [isPlaying, progress, duration]);
 
   // Update Page Title when playing
   useEffect(() => {
