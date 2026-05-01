@@ -71,7 +71,7 @@ function SidebarPlaylistItem({ playlist, pathname, onToggle }: any) {
             onBlur={handleRenameSubmit}
             onKeyDown={handleRenameSubmit}
             autoFocus
-            className="w-full text-sm font-medium bg-[#0A1128] border border-[#00F0FF] rounded px-2 py-1 outline-none text-[#00F0FF]"
+            className="w-full text-sm font-medium bg-[#181a20] border border-[#fcd535] rounded px-2 py-1 outline-none text-[#fcd535]"
           />
         </div>
       ) : (
@@ -86,7 +86,7 @@ function SidebarPlaylistItem({ playlist, pathname, onToggle }: any) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={playlist.coverUrl} alt="" className="w-8 h-8 rounded-md object-cover flex-shrink-0" />
           <div className="min-w-0 flex-1">
-            <p className={cn("text-sm truncate", playlist.isPinned && "text-[#00F0FF]")}>{playlist.title}</p>
+            <p className={cn("text-sm truncate", playlist.isPinned && "text-[#fcd535]")}>{playlist.title}</p>
             <p className="text-xs text-white/30 truncate">{playlist.tracks.length} tracks</p>
           </div>
         </Link>
@@ -105,12 +105,12 @@ function SidebarPlaylistItem({ playlist, pathname, onToggle }: any) {
         </button>
         
         {showMenu && (
-          <div className="absolute right-0 top-full mt-1 w-48 py-1 rounded-xl bg-[#162447] border border-white/10 shadow-2xl z-50">
+          <div className="absolute right-0 top-full mt-1 w-48 py-1 rounded-xl bg-[#1e2329] border border-white/10 shadow-2xl z-50">
             <button
               onClick={() => { updatePlaylist(playlist.id, { isPinned: !playlist.isPinned }); setShowMenu(false); }}
               className="w-full px-4 py-2 text-left text-sm text-white/80 hover:text-white hover:bg-white/[0.06] flex items-center gap-2"
             >
-              <Pin className="w-4 h-4 text-[#00F0FF]" />
+              <Pin className="w-4 h-4 text-[#fcd535]" />
               {playlist.isPinned ? 'Unpin' : 'Pin'}
             </button>
             <button
@@ -179,10 +179,10 @@ export default function Sidebar({ collapsed, onToggle }: { collapsed: boolean; o
         {/* Logo */}
         <div className="flex items-center justify-between px-5 h-16 flex-shrink-0">
           <Link href="/app" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-[#00F0FF] flex items-center justify-center flex-shrink-0">
-              <Music className="w-4 h-4 text-[#0A1128]" />
+            <div className="w-8 h-8 rounded-lg bg-[#fcd535] flex items-center justify-center flex-shrink-0">
+              <Music className="w-4 h-4 text-[#181a20]" />
             </div>
-            <span className="text-lg font-bold text-[#00F0FF]">
+            <span className="text-lg font-bold text-[#fcd535]">
               VibraX
             </span>
           </Link>
@@ -209,7 +209,7 @@ export default function Sidebar({ collapsed, onToggle }: { collapsed: boolean; o
                     : 'text-white/60 hover:text-white hover:bg-white/[0.06]'
                 )}
               >
-                <item.icon className={cn('w-5 h-5 flex-shrink-0', isActive && 'text-[#00F0FF]')} />
+                <item.icon className={cn('w-5 h-5 flex-shrink-0', isActive && 'text-[#fcd535]')} />
                 <span>{item.label}</span>
               </Link>
             );
@@ -255,7 +255,7 @@ export default function Sidebar({ collapsed, onToggle }: { collapsed: boolean; o
                 alert(err.message || 'Có lỗi xảy ra khi lưu Preset.');
               }
             }}
-            className="w-full py-2.5 rounded-lg bg-[#00F0FF] text-black text-xs font-black uppercase tracking-widest hover:bg-[#00C3D6] hover:scale-[1.02] active:scale-95 transition-all shadow-[0_0_15px_rgba(252,213,53,0.3)] flex items-center justify-center gap-2 notranslate"
+            className="w-full py-2.5 rounded-lg bg-[#fcd535] text-black text-xs font-black uppercase tracking-widest hover:bg-[#f0b90b] hover:scale-[1.02] active:scale-95 transition-all shadow-[0_0_15px_rgba(252,213,53,0.3)] flex items-center justify-center gap-2 notranslate"
           >
             Lưu Preset
           </button>

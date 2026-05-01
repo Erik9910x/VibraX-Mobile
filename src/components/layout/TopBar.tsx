@@ -89,7 +89,7 @@ export default function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
         </a>
         <button
           onClick={() => setShowDonation(true)}
-          className="hidden sm:flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00F0FF] hover:bg-[#00C3D6] transition-colors shadow-lg shadow-[#00F0FF]/20"
+          className="hidden sm:flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#fcd535] hover:bg-[#f0b90b] transition-colors shadow-lg shadow-[#fcd535]/20"
         >
           <Heart className="w-4 h-4 text-black fill-black" />
           <span className="text-sm font-bold text-black">Support Us</span>
@@ -105,7 +105,7 @@ export default function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
           </button>
           
           {showLangMenu && (
-            <div className="absolute right-0 top-full mt-2 w-40 py-2 rounded-xl bg-[#162447] border border-white/10 shadow-2xl z-50">
+            <div className="absolute right-0 top-full mt-2 w-40 py-2 rounded-xl bg-[#1e2329] border border-white/10 shadow-2xl z-50">
               <div className="px-4 py-2 text-xs font-bold text-white/40 uppercase tracking-wider mb-1">Language</div>
               <div className="max-h-64 overflow-y-auto">
                 {languages.map((lang) => (
@@ -119,10 +119,10 @@ export default function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
                       setShowLangMenu(false);
                       window.location.reload();
                     }}
-                    className={`w-full px-4 py-2 text-left text-sm flex items-center justify-between transition-colors ${currentLang === lang.name ? 'text-[#00F0FF] bg-white/[0.08]' : 'text-white/80 hover:text-white hover:bg-white/[0.06]'}`}
+                    className={`w-full px-4 py-2 text-left text-sm flex items-center justify-between transition-colors ${currentLang === lang.name ? 'text-[#fcd535] bg-white/[0.08]' : 'text-white/80 hover:text-white hover:bg-white/[0.06]'}`}
                   >
                     <span style={{ fontFamily: 'sans-serif' }}>{lang.name}</span>
-                    {currentLang === lang.name && <span className="w-1.5 h-1.5 rounded-full bg-[#00F0FF]" />}
+                    {currentLang === lang.name && <span className="w-1.5 h-1.5 rounded-full bg-[#fcd535]" />}
                   </button>
                 ))}
               </div>
@@ -135,14 +135,14 @@ export default function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
             id="presetInput"
             type="text" 
             placeholder="Import Preset..." 
-            className="w-40 lg:w-56 h-8 pl-3 pr-16 rounded-full bg-white/[0.06] border border-white/10 text-xs text-white placeholder-white/40 focus:outline-none focus:border-[#00F0FF] transition-colors"
+            className="w-40 lg:w-56 h-8 pl-3 pr-16 rounded-full bg-white/[0.06] border border-white/10 text-xs text-white placeholder-white/40 focus:outline-none focus:border-[#fcd535] transition-colors"
             onKeyDown={(e) => {
               if (e.key === 'Enter') document.getElementById('applyPresetBtn')?.click();
             }}
           />
           <button 
             id="applyPresetBtn"
-            className="absolute right-1 w-14 h-6 rounded-full bg-[#00F0FF] text-black text-[10px] font-black uppercase tracking-wider hover:bg-[#00C3D6] transition-colors"
+            className="absolute right-1 w-14 h-6 rounded-full bg-[#fcd535] text-black text-[10px] font-black uppercase tracking-wider hover:bg-[#f0b90b] transition-colors"
             onClick={async () => {
               const input = document.getElementById('presetInput') as HTMLInputElement;
               let val = input?.value?.trim();
@@ -178,8 +178,8 @@ export default function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
           <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-[#f6465d] rounded-full border-2 border-[#0a1628]" />
         </button>
         <Link href="/app/profile" className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/10 transition-colors">
-          <div className="w-7 h-7 rounded-full bg-[#00F0FF] flex items-center justify-center">
-            <User className="w-3.5 h-3.5 text-[#0A1128]" />
+          <div className="w-7 h-7 rounded-full bg-[#fcd535] flex items-center justify-center">
+            <User className="w-3.5 h-3.5 text-[#181a20]" />
           </div>
           <span className="text-sm font-medium text-white/80 hidden sm:inline notranslate">Guest</span>
         </Link>
@@ -191,7 +191,7 @@ export default function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
           <motion.div 
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            className="relative w-full max-w-sm p-8 rounded-2xl bg-[#132D46] border border-[#00F0FF]/30 text-center"
+            className="relative w-full max-w-sm p-8 rounded-2xl bg-[#132D46] border border-[#fcd535]/30 text-center"
           >
             <button
               onClick={() => setShowDonation(false)}
@@ -205,12 +205,12 @@ export default function TopBar({ onMenuClick }: { onMenuClick?: () => void }) {
               <p className="text-sm text-white/40 font-bold uppercase tracking-widest">Scan QR above to support</p>
             </div>
             <h3 className="text-3xl font-black text-white mb-4">Support VibraX</h3>
-            <p className="text-lg font-bold text-[#00F0FF] leading-relaxed mb-8 px-6">
+            <p className="text-lg font-bold text-[#fcd535] leading-relaxed mb-8 px-6">
               Thank you for supporting our continuous development. Your contribution helps keep VibraX alive and free for everyone!
             </p>
             <button
               onClick={() => setShowDonation(false)}
-              className="w-full py-4 rounded-full bg-[#00F0FF] hover:bg-[#00C3D6] text-[#0A1128] font-black text-lg transition-all shadow-xl shadow-[#00F0FF]/20 active:scale-[0.98]"
+              className="w-full py-4 rounded-full bg-[#fcd535] hover:bg-[#f0b90b] text-[#181a20] font-black text-lg transition-all shadow-xl shadow-[#fcd535]/20 active:scale-[0.98]"
             >
               Close
             </button>

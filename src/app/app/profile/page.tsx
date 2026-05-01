@@ -35,21 +35,21 @@ export default function ProfilePage() {
     <div className="min-h-full bg-[var(--bg-primary)] pb-12">
       {/* Header / Cover */}
       <div className="relative h-48 sm:h-64 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#00F0FF]/20 to-[var(--bg-primary)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#fcd535]/20 to-[var(--bg-primary)]" />
         <div className="absolute inset-0 backdrop-blur-3xl" />
         
         {/* Profile Info */}
         <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col items-center text-center sm:text-left sm:flex-row sm:items-end gap-6 translate-y-1/4 sm:translate-y-0">
           <div className="relative group">
-            <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-3xl bg-gradient-to-br from-[#00F0FF] to-[#00C3D6] p-1 shadow-2xl overflow-hidden">
+            <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-3xl bg-gradient-to-br from-[#fcd535] to-[#f0b90b] p-1 shadow-2xl overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 src="/icon-512.png" 
                 alt="Profile" 
-                className="w-full h-full rounded-[20px] object-cover bg-[#0A1128]"
+                className="w-full h-full rounded-[20px] object-cover bg-[#181a20]"
               />
             </div>
-            <button className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-[#0A1128] border border-white/10 flex items-center justify-center text-white/70 hover:text-[#00F0FF] transition-colors shadow-xl">
+            <button className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-[#181a20] border border-white/10 flex items-center justify-center text-white/70 hover:text-[#fcd535] transition-colors shadow-xl">
               <Settings className="w-4 h-4" />
             </button>
           </div>
@@ -57,7 +57,7 @@ export default function ProfilePage() {
           <div className="flex-1 pb-4">
             <h1 className="text-3xl sm:text-4xl font-black text-white mb-2 flex items-center justify-center sm:justify-start gap-2">
               Guest User
-              <div className="px-2 py-0.5 rounded bg-[#00F0FF]/10 border border-[#00F0FF]/20 text-[10px] font-black text-[#00F0FF] uppercase tracking-widest">PRO</div>
+              <div className="px-2 py-0.5 rounded bg-[#fcd535]/10 border border-[#fcd535]/20 text-[10px] font-black text-[#fcd535] uppercase tracking-widest">PRO</div>
             </h1>
             <p className="text-white/50 text-sm font-medium">VibraX Listener since April 2024</p>
           </div>
@@ -92,7 +92,7 @@ export default function ProfilePage() {
             <section>
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                  <History className="w-5 h-5 text-[#00F0FF]" />
+                  <History className="w-5 h-5 text-[#fcd535]" />
                   Recently Played
                 </h2>
                 <div className="flex items-center gap-3">
@@ -102,7 +102,7 @@ export default function ProfilePage() {
                   >
                     Clear
                   </button>
-                  <Link href="/app/library" className="text-xs font-bold text-[#00F0FF] hover:underline uppercase tracking-widest">View All</Link>
+                  <Link href="/app/library" className="text-xs font-bold text-[#fcd535] hover:underline uppercase tracking-widest">View All</Link>
                 </div>
               </div>
               
@@ -116,7 +116,7 @@ export default function ProfilePage() {
                         <h4 className="text-sm font-bold text-white truncate">{track.title}</h4>
                         <p className="text-xs text-white/40 truncate">{track.artist}</p>
                       </div>
-                      <Disc className="w-4 h-4 text-white/20 group-hover:text-[#00F0FF] transition-colors" />
+                      <Disc className="w-4 h-4 text-white/20 group-hover:text-[#fcd535] transition-colors" />
                     </div>
                   ))
                 ) : (
@@ -131,7 +131,7 @@ export default function ProfilePage() {
             {/* Achievements/Trophies (Mock) */}
             <section>
               <h2 className="text-xl font-bold text-white flex items-center gap-2 mb-4">
-                <TrendingUp className="w-5 h-5 text-[#00F0FF]" />
+                <TrendingUp className="w-5 h-5 text-[#fcd535]" />
                 Listening Insights
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -142,11 +142,11 @@ export default function ProfilePage() {
                     <div className="h-full bg-purple-500 w-[75%]" />
                   </div>
                 </div>
-                <div className="p-4 rounded-2xl bg-gradient-to-br from-[#00F0FF]/10 to-orange-500/10 border border-white/[0.05]">
-                  <p className="text-xs font-bold text-[#00F0FF] uppercase tracking-widest mb-1">Peak Time</p>
+                <div className="p-4 rounded-2xl bg-gradient-to-br from-[#fcd535]/10 to-orange-500/10 border border-white/[0.05]">
+                  <p className="text-xs font-bold text-[#fcd535] uppercase tracking-widest mb-1">Peak Time</p>
                   <h3 className="text-lg font-black text-white mb-2">Midnight Session</h3>
                   <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
-                    <div className="h-full bg-[#00F0FF] w-[40%]" />
+                    <div className="h-full bg-[#fcd535] w-[40%]" />
                   </div>
                 </div>
               </div>
@@ -165,8 +165,8 @@ export default function ProfilePage() {
                     </div>
                     <span className="text-sm font-medium text-white/80 group-hover:text-white">Persistence</span>
                   </div>
-                  <div className="w-10 h-5 bg-[#00F0FF] rounded-full relative">
-                    <div className="absolute right-1 top-1 w-3 h-3 bg-[#0A1128] rounded-full shadow-sm" />
+                  <div className="w-10 h-5 bg-[#fcd535] rounded-full relative">
+                    <div className="absolute right-1 top-1 w-3 h-3 bg-[#181a20] rounded-full shadow-sm" />
                   </div>
                 </button>
                 <button className="w-full flex items-center justify-between group">
@@ -176,7 +176,7 @@ export default function ProfilePage() {
                     </div>
                     <span className="text-sm font-medium text-white/80 group-hover:text-white">Audio Quality</span>
                   </div>
-                  <span className="text-xs font-bold text-[#00F0FF] uppercase">HQ (Lossless)</span>
+                  <span className="text-xs font-bold text-[#fcd535] uppercase">HQ (Lossless)</span>
                 </button>
                 <button className="w-full flex items-center justify-between group">
                   <div className="flex items-center gap-3">
@@ -186,7 +186,7 @@ export default function ProfilePage() {
                     <span className="text-sm font-medium text-white/80 group-hover:text-white">Social Mode</span>
                   </div>
                   <div className="w-10 h-5 bg-white/10 rounded-full relative">
-                    <div className="absolute left-1 top-1 w-3 h-3 bg-[#0A1128] rounded-full shadow-sm" />
+                    <div className="absolute left-1 top-1 w-3 h-3 bg-[#181a20] rounded-full shadow-sm" />
                   </div>
                 </button>
                 <button className="w-full flex items-center justify-between group">
@@ -196,7 +196,7 @@ export default function ProfilePage() {
                     </div>
                     <span className="text-sm font-medium text-white/80 group-hover:text-white">Language</span>
                   </div>
-                  <span className="text-xs font-bold text-[#00F0FF] uppercase">English (US)</span>
+                  <span className="text-xs font-bold text-[#fcd535] uppercase">English (US)</span>
                 </button>
               </div>
               
@@ -225,7 +225,7 @@ export default function ProfilePage() {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Zap className="w-3.5 h-3.5 text-[#00F0FF]" />
+                    <Zap className="w-3.5 h-3.5 text-[#fcd535]" />
                     <span className="text-xs text-white/60">Server Latency</span>
                   </div>
                   <span className="text-[10px] font-mono text-green-400">24ms</span>
@@ -251,14 +251,34 @@ export default function ProfilePage() {
                 <span className="text-xs font-bold text-white">{cacheSize}</span>
               </div>
               <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden mb-4">
-                <div className="h-full bg-[#00F0FF] transition-all duration-1000" style={{ width: cachePercent }} />
+                <div className="h-full bg-[#fcd535] transition-all duration-1000" style={{ width: cachePercent }} />
               </div>
               <button 
-                onClick={() => {
+                onClick={async () => {
+                  if (!confirm('Clear all cached data? This will reset your app state.')) return;
+                  // 1. Clear all localStorage (Zustand stores)
+                  const keys = Object.keys(localStorage);
+                  keys.forEach(k => {
+                    if (k.startsWith('vibrax-') || k.startsWith('preset_') || k.startsWith('vibra_')) {
+                      localStorage.removeItem(k);
+                    }
+                  });
+                  // 2. Clear Service Worker caches
+                  if ('caches' in window) {
+                    const cacheNames = await caches.keys();
+                    await Promise.all(cacheNames.map(name => caches.delete(name)));
+                  }
+                  // 3. Unregister service workers
+                  if ('serviceWorker' in navigator) {
+                    const regs = await navigator.serviceWorker.getRegistrations();
+                    await Promise.all(regs.map(r => r.unregister()));
+                  }
                   setCacheSize('0 MB');
                   setCachePercent('0%');
+                  alert('Cache cleared! Reloading...');
+                  window.location.reload();
                 }}
-                className="flex items-center gap-1.5 text-[10px] font-black text-[#00F0FF] uppercase tracking-widest hover:underline"
+                className="flex items-center gap-1.5 text-[10px] font-black text-[#fcd535] uppercase tracking-widest hover:underline"
               >
                 <Trash2 className="w-3 h-3" />
                 Clear Cache
@@ -266,12 +286,12 @@ export default function ProfilePage() {
             </div>
 
             {/* Promo Card */}
-            <div className="p-6 rounded-3xl bg-gradient-to-br from-[#00F0FF] to-[#00C3D6] relative overflow-hidden group">
+            <div className="p-6 rounded-3xl bg-gradient-to-br from-[#fcd535] to-[#f0b90b] relative overflow-hidden group">
               <div className="absolute -right-8 -bottom-8 opacity-20 group-hover:scale-110 transition-transform duration-700">
-                <Music className="w-32 h-32 text-[#0A1128]" />
+                <Music className="w-32 h-32 text-[#181a20]" />
               </div>
-              <h3 className="text-xl font-black text-[#0A1128] mb-2">VibraX Support</h3>
-              <p className="text-[#0A1128]/70 text-sm font-bold mb-4 leading-relaxed">
+              <h3 className="text-xl font-black text-[#181a20] mb-2">VibraX Support</h3>
+              <p className="text-[#181a20]/70 text-sm font-bold mb-4 leading-relaxed">
                 Ủng hộ tác giả để duy trì máy chủ & phát triển tính năng mới.
               </p>
               <button 
@@ -279,7 +299,7 @@ export default function ProfilePage() {
                   const btn = document.querySelector('button[aria-label="Support Us"], button:has(.lucide-heart)');
                   if (btn) (btn as HTMLButtonElement).click();
                 }}
-                className="px-6 py-2 rounded-full bg-[#0A1128] text-white text-xs font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl"
+                className="px-6 py-2 rounded-full bg-[#181a20] text-white text-xs font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl"
               >
                 Support US
               </button>
@@ -288,8 +308,8 @@ export default function ProfilePage() {
             {/* Cloud Sync (Preset System) */}
             <div className="p-6 rounded-3xl bg-white/[0.03] border border-white/[0.05] relative overflow-hidden group">
               <div className="flex items-center justify-between mb-4">
-                <div className="w-10 h-10 rounded-xl bg-[#00F0FF]/10 flex items-center justify-center">
-                  <Shield className="w-5 h-5 text-[#00F0FF]" />
+                <div className="w-10 h-10 rounded-xl bg-[#fcd535]/10 flex items-center justify-center">
+                  <Shield className="w-5 h-5 text-[#fcd535]" />
                 </div>
                 <div className="px-2 py-1 rounded bg-green-500/10 text-[10px] font-bold text-green-400 uppercase tracking-widest">Connected</div>
               </div>
@@ -297,7 +317,7 @@ export default function ProfilePage() {
               <p className="text-white/40 text-xs mb-4">Your library is synced with Supabase.</p>
               <div className="p-3 rounded-xl bg-white/[0.05] border border-white/[0.1] mb-4">
                 <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-1">Backup Code</p>
-                <p className="text-lg font-mono font-black text-[#00F0FF]">VIBRA-4X29B1</p>
+                <p className="text-lg font-mono font-black text-[#fcd535]">VIBRA-4X29B1</p>
               </div>
               <button className="w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white text-xs font-bold transition-all border border-white/5">
                 Force Sync Now
@@ -314,7 +334,7 @@ export default function ProfilePage() {
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="relative w-full max-w-lg bg-[#0A1128] border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl z-10 max-h-[85vh] flex flex-col"
+            className="relative w-full max-w-lg bg-[#181a20] border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl z-10 max-h-[85vh] flex flex-col"
           >
             <button 
               onClick={() => setShowAbout(false)}
@@ -323,12 +343,12 @@ export default function ProfilePage() {
               <X className="w-5 h-5" />
             </button>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-[#00F0FF] flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 rounded-xl bg-[#fcd535] flex items-center justify-center shrink-0">
                 <Music className="w-6 h-6 text-black" />
               </div>
               <div>
                 <h2 className="text-2xl font-black text-white leading-tight">VibraX</h2>
-                <p className="text-[#00F0FF] text-xs font-bold uppercase tracking-widest">Version 1.0.4-stable</p>
+                <p className="text-[#fcd535] text-xs font-bold uppercase tracking-widest">Version 1.0.4-stable</p>
               </div>
             </div>
             
@@ -336,9 +356,9 @@ export default function ProfilePage() {
               <h3 className="text-sm font-bold text-white/50 uppercase tracking-widest mb-4">Function Log</h3>
               
               <div className="space-y-6">
-                <div className="relative pl-4 border-l-2 border-[#00F0FF]/30">
-                  <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-[#00F0FF]" />
-                  <span className="text-xs font-bold text-[#00F0FF] mb-1 block">v1.0.4 - May 2026</span>
+                <div className="relative pl-4 border-l-2 border-[#fcd535]/30">
+                  <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-[#fcd535]" />
+                  <span className="text-xs font-bold text-[#fcd535] mb-1 block">v1.0.4 - May 2026</span>
                   <ul className="text-sm text-white/70 space-y-1 list-disc pl-4">
                     <li>Added Support US and Facebook links</li>
                     <li>Implemented Promise.any API parallelization for sub-second loading</li>

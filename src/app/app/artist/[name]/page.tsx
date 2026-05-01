@@ -40,7 +40,7 @@ export default function ArtistPage({ params }: { params: Promise<{ name: string 
   if (loading) {
     return (
       <div className="flex-1 flex items-center justify-center min-h-[50vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00F0FF]"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#fcd535]"></div>
       </div>
     );
   }
@@ -77,7 +77,7 @@ export default function ArtistPage({ params }: { params: Promise<{ name: string 
               if (isPlaying && currentTrack?.id === tracks[0]?.id) togglePlay();
               else handlePlayAll();
             }}
-            className="w-14 h-14 rounded-full bg-[#00F0FF] flex items-center justify-center hover:scale-105 active:scale-95 transition-transform shadow-[0_0_15px_rgba(252,213,53,0.3)]"
+            className="w-14 h-14 rounded-full bg-[#fcd535] flex items-center justify-center hover:scale-105 active:scale-95 transition-transform shadow-[0_0_15px_rgba(252,213,53,0.3)]"
           >
             {isPlaying && currentTrack?.id === tracks[0]?.id ? (
               <Pause className="w-7 h-7 fill-black text-black" />

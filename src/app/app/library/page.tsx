@@ -62,7 +62,7 @@ export default function LibraryPage() {
           </button>
           <button
             onClick={() => setShowModal(true)}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#00F0FF] hover:bg-[#00C3D6] text-[#0A1128] transition-colors text-sm font-medium"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#fcd535] hover:bg-[#f0b90b] text-[#181a20] transition-colors text-sm font-medium"
           >
             <Plus className="w-4 h-4" />
             New Playlist
@@ -122,7 +122,7 @@ export default function LibraryPage() {
               placeholder="Playlist name"
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-sm placeholder:text-white/30 focus:outline-none focus:border-[#00F0FF]/50 mb-3"
+              className="w-full px-4 py-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-sm placeholder:text-white/30 focus:outline-none focus:border-[#fcd535]/50 mb-3"
               autoFocus
               onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
             />
@@ -131,7 +131,7 @@ export default function LibraryPage() {
               value={newDesc}
               onChange={(e) => setNewDesc(e.target.value)}
               rows={3}
-              className="w-full px-4 py-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-sm placeholder:text-white/30 focus:outline-none focus:border-[#00F0FF]/50 resize-none mb-4"
+              className="w-full px-4 py-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-sm placeholder:text-white/30 focus:outline-none focus:border-[#fcd535]/50 resize-none mb-4"
             />
             <div className="flex gap-3 justify-end">
               <button
@@ -143,7 +143,7 @@ export default function LibraryPage() {
               <button
                 onClick={handleCreate}
                 disabled={!newTitle.trim()}
-                className="px-6 py-2 rounded-full bg-[#00F0FF] hover:bg-[#00C3D6] text-[#0A1128] disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium transition-colors"
+                className="px-6 py-2 rounded-full bg-[#fcd535] hover:bg-[#f0b90b] text-[#181a20] disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium transition-colors"
               >
                 Create
               </button>
@@ -167,7 +167,7 @@ export default function LibraryPage() {
               placeholder="Supabase Code..."
               value={importCode}
               onChange={(e) => setImportCode(e.target.value.toUpperCase())}
-              className="w-full px-4 py-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-sm font-mono placeholder:text-white/30 focus:outline-none focus:border-[#00F0FF]/50 mb-4"
+              className="w-full px-4 py-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-sm font-mono placeholder:text-white/30 focus:outline-none focus:border-[#fcd535]/50 mb-4"
               autoFocus
               onKeyDown={(e) => e.key === 'Enter' && handleImport()}
             />
@@ -181,7 +181,7 @@ export default function LibraryPage() {
               <button
                 onClick={handleImport}
                 disabled={!importCode.trim()}
-                className="px-6 py-2 rounded-full bg-[#00F0FF] hover:bg-[#00C3D6] text-[#0A1128] disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium transition-colors"
+                className="px-6 py-2 rounded-full bg-[#fcd535] hover:bg-[#f0b90b] text-[#181a20] disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium transition-colors"
               >
                 Import
               </button>

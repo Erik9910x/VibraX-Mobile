@@ -65,7 +65,7 @@ export default function TrackInspectPage({ params }: { params: Promise<{ id: str
   if (loading) {
     return (
       <div className="flex-1 flex items-center justify-center min-h-[50vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00F0FF]"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#fcd535]"></div>
       </div>
     );
   }
@@ -75,7 +75,7 @@ export default function TrackInspectPage({ params }: { params: Promise<{ id: str
       <div className="flex-1 flex flex-col items-center justify-center min-h-[50vh] gap-4">
         <Music className="w-16 h-16 text-white/20" />
         <h1 className="text-2xl font-bold text-white/60">Track not found</h1>
-        <button onClick={() => router.back()} className="text-[#00F0FF] hover:underline">Go back</button>
+        <button onClick={() => router.back()} className="text-[#fcd535] hover:underline">Go back</button>
       </div>
     );
   }
@@ -84,8 +84,8 @@ export default function TrackInspectPage({ params }: { params: Promise<{ id: str
     <div className="relative pb-24">
       {/* Dynamic Background Banner */}
       <div className="absolute top-0 left-0 right-0 h-[450px] overflow-hidden -z-10">
-        <div className="absolute inset-0 bg-[#0A1128]/80 z-10 backdrop-blur-3xl" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0A1128]/50 via-transparent to-[#0A1128] z-20" />
+        <div className="absolute inset-0 bg-[#181a20]/80 z-10 backdrop-blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#181a20]/50 via-transparent to-[#181a20] z-20" />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={track.imageUrl} alt="" className="w-full h-full object-cover blur-2xl opacity-50 transform scale-125" />
       </div>
@@ -110,7 +110,7 @@ export default function TrackInspectPage({ params }: { params: Promise<{ id: str
               {track.title}
             </h1>
             <div className="flex items-center gap-2 text-sm md:text-base font-medium text-white/80 flex-wrap">
-              <div className="w-6 h-6 rounded-full bg-[#00F0FF] flex items-center justify-center flex-shrink-0">
+              <div className="w-6 h-6 rounded-full bg-[#fcd535] flex items-center justify-center flex-shrink-0">
                 <Music className="w-3 h-3 text-black" />
               </div>
               <span className="font-bold text-white notranslate">{track.artist}</span>
@@ -126,12 +126,12 @@ export default function TrackInspectPage({ params }: { params: Promise<{ id: str
         <div className="flex items-center gap-6 mb-12">
           <button
             onClick={() => isActive ? togglePlay() : playTrack(track)}
-            className="w-16 h-16 rounded-full bg-[#00F0FF] flex items-center justify-center hover:scale-105 active:scale-95 transition-transform shadow-[0_0_30px_rgba(252,213,53,0.3)]"
+            className="w-16 h-16 rounded-full bg-[#fcd535] flex items-center justify-center hover:scale-105 active:scale-95 transition-transform shadow-[0_0_30px_rgba(252,213,53,0.3)]"
           >
             {isActive && isPlaying ? (
-              <Pause className="w-8 h-8 fill-[#0A1128] text-[#0A1128]" />
+              <Pause className="w-8 h-8 fill-[#181a20] text-[#181a20]" />
             ) : (
-              <Play className="w-8 h-8 fill-[#0A1128] text-[#0A1128] ml-1" />
+              <Play className="w-8 h-8 fill-[#181a20] text-[#181a20] ml-1" />
             )}
           </button>
           
@@ -139,7 +139,7 @@ export default function TrackInspectPage({ params }: { params: Promise<{ id: str
             onClick={() => toggleFavorite(track.id)}
             className="text-white/40 hover:text-white transition-colors"
           >
-            <Heart className={cn('w-10 h-10', liked && 'text-[#00F0FF] fill-[#00F0FF]')} />
+            <Heart className={cn('w-10 h-10', liked && 'text-[#fcd535] fill-[#fcd535]')} />
           </button>
 
           <div className="relative" ref={menuRef}>
@@ -150,7 +150,7 @@ export default function TrackInspectPage({ params }: { params: Promise<{ id: str
               <Plus className="w-6 h-6 text-white" />
             </button>
             {showMenu && (
-              <div className="absolute left-0 top-full mt-2 w-56 py-2 rounded-xl bg-[#162447] border border-white/10 shadow-2xl z-50">
+              <div className="absolute left-0 top-full mt-2 w-56 py-2 rounded-xl bg-[#1e2329] border border-white/10 shadow-2xl z-50">
                 <div className="px-4 py-2 text-xs font-bold text-white/40 uppercase tracking-wider mb-1">Add to Playlist</div>
                 {playlists.map((pl) => (
                   <button
@@ -158,7 +158,7 @@ export default function TrackInspectPage({ params }: { params: Promise<{ id: str
                     onClick={() => { addTrackToPlaylist(pl.id, track); setShowMenu(false); alert(`Added to ${pl.title}`); }}
                     className="w-full px-4 py-2 text-left text-sm text-white/80 hover:text-white hover:bg-white/[0.08] flex items-center gap-2 transition-colors"
                   >
-                    <Music className="w-4 h-4 text-[#00F0FF]" />
+                    <Music className="w-4 h-4 text-[#fcd535]" />
                     {pl.title}
                   </button>
                 ))}
@@ -204,16 +204,16 @@ export default function TrackInspectPage({ params }: { params: Promise<{ id: str
           {/* Lyrics Area */}
           <div className="lg:col-span-2">
             <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-              <Mic2 className="w-6 h-6 text-[#00F0FF]" />
+              <Mic2 className="w-6 h-6 text-[#fcd535]" />
               Lyrics
             </h2>
             <div 
-              className="bg-gradient-to-br from-[#162447]/80 to-[#162447]/40 backdrop-blur-md rounded-2xl p-8 border border-white/[0.04]"
+              className="bg-gradient-to-br from-[#1e2329]/80 to-[#1e2329]/40 backdrop-blur-md rounded-2xl p-8 border border-white/[0.04]"
               style={{ minHeight: '300px' }}
             >
               {lyricsLoading ? (
                 <div className="h-full flex flex-col items-center justify-center text-white py-12">
-                  <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#00F0FF] mb-4"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#fcd535] mb-4"></div>
                   <p className="animate-pulse font-medium text-white/70">Loading lyrics...</p>
                 </div>
               ) : lyrics ? (
@@ -250,7 +250,7 @@ export default function TrackInspectPage({ params }: { params: Promise<{ id: str
                 </div>
                 <div>
                   <span className="text-xs font-bold text-white/40 uppercase tracking-wider block mb-1">Artist Profile</span>
-                  <h3 className="text-xl font-bold text-white group-hover:text-[#00F0FF] transition-colors">{track.artist}</h3>
+                  <h3 className="text-xl font-bold text-white group-hover:text-[#fcd535] transition-colors">{track.artist}</h3>
                   <p className="text-sm text-white/40">Verified Artist</p>
                 </div>
               </div>
@@ -263,7 +263,7 @@ export default function TrackInspectPage({ params }: { params: Promise<{ id: str
                 }}
                 className={cn(
                   "w-full py-2.5 rounded-full border font-bold text-sm transition-all",
-                  following ? "bg-[#00F0FF] text-black border-[#00F0FF]" : "border-white/20 hover:border-white hover:bg-white/5 text-white"
+                  following ? "bg-[#fcd535] text-black border-[#fcd535]" : "border-white/20 hover:border-white hover:bg-white/5 text-white"
                 )}
               >
                 {following ? 'Following' : 'Follow Artist'}
@@ -280,7 +280,7 @@ export default function TrackInspectPage({ params }: { params: Promise<{ id: str
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={track.imageUrl} alt="" className="w-10 h-10 rounded object-cover" />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white truncate group-hover/item:text-[#00F0FF] transition-colors">{track.title} {i > 1 ? `(Remix ${i})` : ''}</p>
+                      <p className="text-sm font-medium text-white truncate group-hover/item:text-[#fcd535] transition-colors">{track.title} {i > 1 ? `(Remix ${i})` : ''}</p>
                       <p className="text-xs text-white/40 truncate">{track.artist}</p>
                     </div>
                   </div>

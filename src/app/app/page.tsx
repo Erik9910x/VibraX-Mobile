@@ -11,7 +11,7 @@ import { Play, TrendingUp, Sparkles, Clock, Music, Loader2, Disc3 } from 'lucide
 
 const container = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.04 } },
+  show: { opacity: 1, transition: { staggerChildren: 0.02 } },
 };
 const item = {
   hidden: { opacity: 0, y: 16 },
@@ -101,7 +101,7 @@ export default function DiscoverPage() {
         {/* Loading indicator */}
         <div className="flex flex-col items-center justify-center py-16 gap-4">
           <div className="relative">
-            <Disc3 className="w-12 h-12 text-[#00F0FF] animate-spin" />
+            <Disc3 className="w-12 h-12 text-[#fcd535] animate-spin" />
           </div>
           <div className="text-center">
             <p className="text-white/60 text-sm font-medium">Loading exclusive tracks...</p>
@@ -146,10 +146,10 @@ export default function DiscoverPage() {
         animate={{ opacity: 1, y: 0 }}
         className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-blue-600/20 via-purple-600/10 to-transparent p-8 border border-white/[0.06]"
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-[#00F0FF]/5 to-[#00C3D6]/5" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#fcd535]/5 to-[#f0b90b]/5" />
         <div className="relative z-10">
           <h1 className="text-3xl font-bold mb-2">{greeting}</h1>
-          <p className="text-[#00F0FF]/80 text-sm font-medium">Âm nhạc gắn kết mọi thứ, hãy chìm đắm trong chúng.</p>
+          <p className="text-[#fcd535]/80 text-sm font-medium">Âm nhạc gắn kết mọi thứ, hãy chìm đắm trong chúng.</p>
         </div>
       </motion.div>
 
@@ -172,7 +172,7 @@ export default function DiscoverPage() {
       {trendingTracks.length > 0 && (
         <section>
           <div className="flex items-center gap-2 mb-1">
-            <TrendingUp className="w-5 h-5 text-[#00F0FF]" />
+            <TrendingUp className="w-5 h-5 text-[#fcd535]" />
             <h2 className="text-xl font-bold">World Top Songs Playlist</h2>
           </div>
           <p className="text-xs text-white/30 mb-4">Updated continuously based on global metrics</p>
