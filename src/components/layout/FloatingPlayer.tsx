@@ -357,7 +357,7 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
 
   if (!currentTrack) {
     return (
-      <div className="fixed bottom-0 left-0 right-0 h-[var(--player-height)] bg-[#1e2329]/95 backdrop-blur-xl border-t border-[#2b3139] z-50 flex items-center justify-center">
+      <div className="fixed bottom-[72px] lg:bottom-0 left-0 right-0 h-[var(--player-height)] bg-[#162447]/95 backdrop-blur-xl border-t border-[#1F4068] z-50 flex items-center justify-center">
         <p className="text-[#707a8a] text-sm">Select a track to start playing</p>
       </div>
     );
@@ -454,7 +454,7 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
                     <p className="text-white/20 text-sm">{currentTrack.title}</p>
                     <button 
                       onClick={fetchLyrics}
-                      className="mt-4 px-6 py-2 rounded-full bg-[#fcd535] text-black text-sm font-bold hover:bg-[#f0b90b] transition-colors"
+                      className="mt-4 px-6 py-2 rounded-full bg-[#00F0FF] text-black text-sm font-bold hover:bg-[#00C3D6] transition-colors"
                     >
                       Retry Search
                     </button>
@@ -467,18 +467,18 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
       </AnimatePresence>
 
       {/* Main Bottom Player Bar */}
-      <div className="fixed bottom-0 left-0 right-0 h-[var(--player-height)] bg-[#1e2329]/95 backdrop-blur-xl border-t border-[#2b3139] z-50 overflow-visible">
+      <div className="fixed bottom-[72px] lg:bottom-0 left-0 right-0 h-[var(--player-height)] bg-[#162447]/95 backdrop-blur-xl border-t border-[#1F4068] z-50 overflow-visible">
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
         {/* Global Progress Seeker Bar */}
         <div
           ref={progressRef}
-          className="absolute top-0 left-0 right-0 h-1.5 -translate-y-[1px] bg-[#2b3139] cursor-pointer group z-50 hover:h-2 transition-[height]"
+          className="absolute top-0 left-0 right-0 h-1.5 -translate-y-[1px] bg-[#1F4068] cursor-pointer group z-50 hover:h-2 transition-[height]"
           onClick={handleProgressClick}
         >
           {/* Progress Indicator */}
-          <div className="h-full bg-gradient-to-r from-[#fcd535] to-[#f0b90b] relative transition-all duration-100 ease-out" style={{ width: `${progressPercent}%` }}>
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full ring-2 ring-[#fcd535] bg-white opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_10px_rgba(252,213,53,0.5)]" />
+          <div className="h-full bg-gradient-to-r from-[#00F0FF] to-[#00C3D6] relative transition-all duration-100 ease-out" style={{ width: `${progressPercent}%` }}>
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full ring-2 ring-[#00F0FF] bg-white opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_10px_rgba(252,213,53,0.5)]" />
           </div>
         </div>
 
@@ -498,14 +498,14 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
               <p className="text-xs text-white/50 truncate cursor-pointer hover:underline">{currentTrack.artist}</p>
             </div>
             <button onClick={() => toggleFavorite(currentTrack.id)} className="flex-shrink-0 p-2 ml-1 hidden lg:block">
-              <Heart className={cn('w-4 h-4 transition-colors', liked ? 'text-[#fcd535] fill-[#fcd535]' : 'text-[#707a8a] hover:text-white')} />
+              <Heart className={cn('w-4 h-4 transition-colors', liked ? 'text-[#00F0FF] fill-[#00F0FF]' : 'text-[#707a8a] hover:text-white')} />
             </button>
           </div>
 
           {/* Center: Playback Controls */}
           <div className="flex-[2] flex flex-col items-center justify-center gap-1.5 w-[50%]">
             <div className="flex items-center gap-4 lg:gap-6">
-              <button onClick={toggleShuffle} className={cn('w-6 h-6 flex items-center justify-center hidden sm:flex', isShuffled ? 'text-[#fcd535]' : 'text-white/40 hover:text-white/80')}>
+              <button onClick={toggleShuffle} className={cn('w-6 h-6 flex items-center justify-center hidden sm:flex', isShuffled ? 'text-[#00F0FF]' : 'text-white/40 hover:text-white/80')}>
                 <Shuffle className="w-[18px] h-[18px]" />
               </button>
               
@@ -529,7 +529,7 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
                 <RotateCw className="w-[18px] h-[18px]" />
               </button>
 
-              <button onClick={toggleRepeat} className={cn('w-6 h-6 flex items-center justify-center hidden sm:flex', repeatMode !== 'off' ? 'text-[#fcd535]' : 'text-white/40 hover:text-white/80')}>
+              <button onClick={toggleRepeat} className={cn('w-6 h-6 flex items-center justify-center hidden sm:flex', repeatMode !== 'off' ? 'text-[#00F0FF]' : 'text-white/40 hover:text-white/80')}>
                 {repeatMode === 'one' ? <Repeat1 className="w-[18px] h-[18px]" /> : <Repeat className="w-[18px] h-[18px]" />}
               </button>
             </div>
@@ -550,7 +550,7 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
               onClick={() => setShowLyrics(s => !s)}
               className={cn(
                 'w-8 h-8 rounded-full flex items-center justify-center transition-all',
-                showLyrics ? 'text-[#181a20] bg-[#fcd535] ring-1 ring-[#fcd535]/30' : 'text-white/40 hover:text-white/80'
+                showLyrics ? 'text-[#0A1128] bg-[#00F0FF] ring-1 ring-[#00F0FF]/30' : 'text-white/40 hover:text-white/80'
               )}
               title="Lyrics View (L)"
             >

@@ -32,7 +32,7 @@ export const viewport = {
   maximumScale: 1,
   userScalable: false,
   viewportFit: "cover",
-  themeColor: "#0b0e11",
+  themeColor: "#0A1128",
 };
 
 export default function RootLayout({
@@ -47,7 +47,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="VibraX" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="theme-color" content="#0b0e11" />
+        <meta name="theme-color" content="#0A1128" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
         <link rel="apple-touch-icon" sizes="152x152" href="/icon-192.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/icon-192.png" />

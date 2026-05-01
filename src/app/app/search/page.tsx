@@ -131,7 +131,7 @@ export default function SearchPage() {
               </p>
               <button
                 onClick={() => tracks.length > 0 && setQueue(tracks, 0)}
-                className="text-xs text-[#fcd535] hover:text-[#f0b90b] font-medium flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#fcd535]/10 hover:bg-[#fcd535]/20 transition-colors"
+                className="text-xs text-[#00F0FF] hover:text-[#00C3D6] font-medium flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#00F0FF]/10 hover:bg-[#00F0FF]/20 transition-colors"
               >
                 <Play className="w-3 h-3" />
                 Play all
@@ -153,10 +153,10 @@ export default function SearchPage() {
                     <div>
                       <h1 className="text-3xl font-bold mb-1 truncate">{tracks[0].title}</h1>
                       <p className="text-white/60 mb-3 text-sm">Song • {tracks[0].artist}</p>
-                      <span className="inline-block px-3 py-1 rounded-full bg-[#1e2329] text-[#fcd535] text-xs font-semibold">{tracks[0].album}</span>
+                      <span className="inline-block px-3 py-1 rounded-full bg-[#162447] text-[#00F0FF] text-xs font-semibold">{tracks[0].album}</span>
                     </div>
-                    <button className="absolute bottom-5 right-5 w-12 h-12 rounded-full bg-[#fcd535] flex items-center justify-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all shadow-[0_0_20px_rgba(252,213,53,0.3)]">
-                      <Play className="w-6 h-6 fill-[#181a20] text-[#181a20] ml-1" />
+                    <button className="absolute bottom-5 right-5 w-12 h-12 rounded-full bg-[#00F0FF] flex items-center justify-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all shadow-[0_0_20px_rgba(252,213,53,0.3)]">
+                      <Play className="w-6 h-6 fill-[#0A1128] text-[#0A1128] ml-1" />
                     </button>
                   </div>
                 </div>

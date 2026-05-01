@@ -116,7 +116,7 @@ export default function PlaylistDetailPage({ params }: { params: Promise<{ id: s
   return (
     <div className="pb-12">
       {/* Header */}
-      <div className="relative p-8 pb-6 bg-gradient-to-b from-[#fcd535]/15 via-[#fcd535]/5 to-transparent">
+      <div className="relative p-8 pb-6 bg-gradient-to-b from-[#00F0FF]/15 via-[#00F0FF]/5 to-transparent">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -137,12 +137,12 @@ export default function PlaylistDetailPage({ params }: { params: Promise<{ id: s
                   type="text"
                   value={editTitle}
                   onChange={(e) => setEditTitle(e.target.value)}
-                  className="text-2xl font-bold bg-white/[0.06] border border-white/10 rounded-lg px-3 py-1 focus:outline-none focus:border-[#fcd535]/50 w-full"
+                  className="text-2xl font-bold bg-white/[0.06] border border-white/10 rounded-lg px-3 py-1 focus:outline-none focus:border-[#00F0FF]/50 w-full"
                   autoFocus
                 />
                 <div className="flex items-center gap-4">
                   <label className="flex items-center gap-2 px-4 py-2 text-sm bg-white/[0.06] border border-white/10 rounded-lg cursor-pointer hover:bg-white/[0.1] transition-colors flex-shrink-0">
-                    <Camera className="w-4 h-4 text-[#fcd535]" />
+                    <Camera className="w-4 h-4 text-[#00F0FF]" />
                     <span className="text-white/80 font-medium">Upload Cover</span>
                     <input
                       type="file"
@@ -159,11 +159,11 @@ export default function PlaylistDetailPage({ params }: { params: Promise<{ id: s
                   value={editDesc}
                   onChange={(e) => setEditDesc(e.target.value)}
                   rows={2}
-                  className="text-sm bg-white/[0.06] border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:border-[#fcd535]/50 w-full resize-none"
+                  className="text-sm bg-white/[0.06] border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:border-[#00F0FF]/50 w-full resize-none"
                   placeholder="Add a description..."
                 />
                 <div className="flex gap-2">
-                  <button onClick={handleSaveEdit} className="px-4 py-1.5 rounded-full bg-[#fcd535] text-black text-xs font-medium">
+                  <button onClick={handleSaveEdit} className="px-4 py-1.5 rounded-full bg-[#00F0FF] text-black text-xs font-medium">
                     Save
                   </button>
                   <button onClick={() => setEditing(false)} className="px-4 py-1.5 rounded-full bg-white/[0.06] text-xs text-white/60">
@@ -178,7 +178,7 @@ export default function PlaylistDetailPage({ params }: { params: Promise<{ id: s
               </>
             )}
             <p className="text-xs text-white/30">
-              {playlist.tracks.length} songs • {mins} min • Code: <span className="text-[#fcd535] font-mono">{playlist.shareCode}</span>
+              {playlist.tracks.length} songs • {mins} min • Code: <span className="text-[#00F0FF] font-mono">{playlist.shareCode}</span>
             </p>
           </div>
         </motion.div>
@@ -188,7 +188,7 @@ export default function PlaylistDetailPage({ params }: { params: Promise<{ id: s
           <button
             onClick={handlePlayAll}
             disabled={playlist.tracks.length === 0}
-            className="w-12 h-12 rounded-full bg-[#fcd535] hover:bg-[#f0b90b] disabled:opacity-40 flex items-center justify-center shadow-lg shadow-[#fcd535]/30 hover:scale-105 active:scale-95 transition-all"
+            className="w-12 h-12 rounded-full bg-[#00F0FF] hover:bg-[#00C3D6] disabled:opacity-40 flex items-center justify-center shadow-lg shadow-[#00F0FF]/30 hover:scale-105 active:scale-95 transition-all"
           >
             <Play className="w-5 h-5 text-black ml-0.5 fill-black" />
           </button>
@@ -204,12 +204,12 @@ export default function PlaylistDetailPage({ params }: { params: Promise<{ id: s
             </button>
             
             {showMenu && (
-              <div className="absolute left-0 top-full mt-2 w-48 py-1 rounded-xl bg-[#1e2329] border border-white/10 shadow-2xl z-50">
+              <div className="absolute left-0 top-full mt-2 w-48 py-1 rounded-xl bg-[#162447] border border-white/10 shadow-2xl z-50">
                 <button
                   onClick={() => { updatePlaylist(playlist.id, { isPinned: !playlist.isPinned }); setShowMenu(false); }}
                   className="w-full px-4 py-2 text-left text-sm text-white/80 hover:text-white hover:bg-white/[0.06] flex items-center gap-2"
                 >
-                  <Pin className="w-4 h-4 text-[#fcd535]" />
+                  <Pin className="w-4 h-4 text-[#00F0FF]" />
                   {playlist.isPinned ? 'Unpin Playlist' : 'Pin Playlist'}
                 </button>
                 <button

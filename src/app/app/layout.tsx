@@ -3,6 +3,7 @@
 import Sidebar from '@/components/layout/Sidebar';
 import TopBar from '@/components/layout/TopBar';
 import FloatingPlayer from '@/components/layout/FloatingPlayer';
+import MobileNav from '@/components/layout/MobileNav';
 import { usePlaylistStore } from '@/lib/store';
 import { mockPlaylists } from '@/data/mockData';
 import { useEffect, useState } from 'react';
@@ -32,13 +33,14 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       
       <Sidebar collapsed={!sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
       
-      <div className="flex-1 flex flex-col lg:ml-[280px] pb-[var(--player-height)] overflow-hidden transition-[margin] duration-300">
+      <div className="flex-1 flex flex-col lg:ml-[280px] pb-[calc(var(--player-height)+72px)] lg:pb-[var(--player-height)] overflow-hidden transition-[margin] duration-300">
         <TopBar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
         <main className="flex-1 overflow-y-auto">
           {children}
         </main>
       </div>
       
+      <MobileNav />
       <FloatingPlayer />
     </div>
   );

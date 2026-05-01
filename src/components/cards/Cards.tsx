@@ -53,19 +53,19 @@ export function TrackCard({ track, tracks, index }: { track: Track; tracks?: Tra
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors" />
         <button
           className={cn(
-            'absolute bottom-2 right-2 w-10 h-10 rounded-full bg-[#fcd535] flex items-center justify-center shadow-lg shadow-[#fcd535]/30 transition-all duration-200 z-10',
+            'absolute bottom-2 right-2 w-10 h-10 rounded-full bg-[#00F0FF] flex items-center justify-center shadow-lg shadow-[#00F0FF]/30 transition-all duration-200 z-10',
             isActive && isPlaying
               ? 'opacity-100 translate-y-0 scale-100'
               : 'opacity-0 translate-y-2 scale-90 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100'
           )}
           onClick={(e) => { e.stopPropagation(); handlePlay(); }}
         >
-          {isActive && isPlaying ? <Pause className="w-4 h-4 text-[#181a20] fill-[#181a20]" /> : <Play className="w-4 h-4 text-[#181a20] fill-[#181a20] ml-0.5" />}
+          {isActive && isPlaying ? <Pause className="w-4 h-4 text-[#0A1128] fill-[#0A1128]" /> : <Play className="w-4 h-4 text-[#0A1128] fill-[#0A1128] ml-0.5" />}
         </button>
       </div>
       <div className="flex justify-between items-start mt-2 relative">
         <div className="min-w-0 pr-2 flex-1">
-          <p className={cn('text-sm font-medium truncate notranslate', isActive && 'text-[#fcd535]')}>{track.title}</p>
+          <p className={cn('text-sm font-medium truncate notranslate', isActive && 'text-[#00F0FF]')}>{track.title}</p>
           <p className="text-xs text-white/40 truncate mt-0.5 notranslate">{track.artist}</p>
         </div>
       </div>
@@ -120,7 +120,7 @@ export function TrackRow({ track, tracks, index, showIndex = true, playCount, hi
         <span className={cn('text-sm group-hover:hidden', isActive ? 'text-blue-400' : 'text-white/30')}>
           {showIndex ? index + 1 : '•'}
         </span>
-        <button onClick={(e) => { e.stopPropagation(); handlePlay(); }} className="hidden group-hover:block mx-auto text-[#fcd535] hover:text-[#f0b90b] transition-colors">
+        <button onClick={(e) => { e.stopPropagation(); handlePlay(); }} className="hidden group-hover:block mx-auto text-[#00F0FF] hover:text-[#00C3D6] transition-colors">
           {isActive && isPlaying ? (
             <Pause className="w-4 h-4 fill-current" />
           ) : (
@@ -207,7 +207,7 @@ export function PlaylistCard({ playlist }: { playlist: { id: string; title: stri
         
         {/* Pin Badge */}
         {playlist.isPinned && (
-          <div className="absolute top-2 left-2 w-6 h-6 rounded-full bg-[#fcd535] flex items-center justify-center shadow-lg z-10">
+          <div className="absolute top-2 left-2 w-6 h-6 rounded-full bg-[#00F0FF] flex items-center justify-center shadow-lg z-10">
             <Pin className="w-3 h-3 text-black fill-black" />
           </div>
         )}
@@ -225,12 +225,12 @@ export function PlaylistCard({ playlist }: { playlist: { id: string; title: stri
           </button>
           
           {showMenu && (
-            <div className="absolute right-0 top-full mt-1 w-48 py-1 rounded-xl bg-[#1e2329] border border-white/10 shadow-2xl z-50">
+            <div className="absolute right-0 top-full mt-1 w-48 py-1 rounded-xl bg-[#162447] border border-white/10 shadow-2xl z-50">
               <button
                 onClick={(e) => { e.stopPropagation(); updatePlaylist(playlist.id, { isPinned: !playlist.isPinned }); setShowMenu(false); }}
                 className="w-full px-4 py-2 text-left text-sm text-white/80 hover:text-white hover:bg-white/[0.06] flex items-center gap-2"
               >
-                <Pin className="w-4 h-4 text-[#fcd535]" />
+                <Pin className="w-4 h-4 text-[#00F0FF]" />
                 {playlist.isPinned ? 'Unpin Playlist' : 'Pin Playlist'}
               </button>
               <button
@@ -272,14 +272,14 @@ export function PlaylistCard({ playlist }: { playlist: { id: string; title: stri
           <motion.button
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-[#fcd535] flex items-center justify-center shadow-lg shadow-[#fcd535]/30 z-10"
+            className="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-[#00F0FF] flex items-center justify-center shadow-lg shadow-[#00F0FF]/30 z-10"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               if (playlist.tracks.length > 0) setQueue(playlist.tracks, 0);
             }}
           >
-            <Play className="w-4 h-4 text-[#181a20] fill-[#181a20] ml-0.5" />
+            <Play className="w-4 h-4 text-[#0A1128] fill-[#0A1128] ml-0.5" />
           </motion.button>
         )}
       </div>
@@ -293,11 +293,11 @@ export function PlaylistCard({ playlist }: { playlist: { id: string; title: stri
           onKeyDown={handleRenameSubmit}
           autoFocus
           onClick={e => e.stopPropagation()}
-          className="w-full text-sm font-medium bg-[#181a20] border border-[#fcd535] rounded px-2 py-1 outline-none text-[#fcd535]"
+          className="w-full text-sm font-medium bg-[#0A1128] border border-[#00F0FF] rounded px-2 py-1 outline-none text-[#00F0FF]"
         />
       ) : (
         <a href={`/app/playlist/${playlist.id}`} className="block">
-          <p className="text-sm font-medium truncate group-hover:text-[#fcd535] transition-colors">{playlist.title}</p>
+          <p className="text-sm font-medium truncate group-hover:text-[#00F0FF] transition-colors">{playlist.title}</p>
           <p className="text-xs text-white/40 truncate mt-0.5">{playlist.description || `${playlist.tracks.length} tracks`}</p>
         </a>
       )}

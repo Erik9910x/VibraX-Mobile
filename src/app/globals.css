@@ -1,22 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #0b0e11;
-  --bg-secondary: #1e2329;
-  --bg-tertiary: #2b3139;
+  --bg-primary: #0A1128; /* Deep Navy Blue */
+  --bg-secondary: #162447; /* Lighter Navy */
+  --bg-tertiary: #1F4068; /* Mid Navy Blue */
   --bg-surface: rgba(255, 255, 255, 0.05);
   --bg-surface-hover: rgba(255, 255, 255, 0.1);
   --bg-surface-active: rgba(255, 255, 255, 0.15);
-  --accent: #fcd535;
-  --accent-hover: #f0b90b;
-  --accent-purple: #fcd535;
-  --accent-pink: #f0b90b;
-  --accent-gradient: linear-gradient(135deg, #fcd535 0%, #f0b90b 100%);
+  --accent: #00F0FF; /* Neon Cyan */
+  --accent-hover: #00C3D6; /* Darker Cyan */
+  --accent-purple: #B200FF; /* Neon Purple */
+  --accent-pink: #FF00A0; /* Neon Pink */
+  --accent-gradient: linear-gradient(135deg, #00F0FF 0%, #B200FF 100%);
   --text-primary: #ffffff;
-  --text-secondary: #eaecef;
-  --text-tertiary: #707a8a;
-  --border: #2b3139;
-  --border-hover: #474d57;
+  --text-secondary: #A0B3C6;
+  --text-tertiary: #5D7998;
+  --border: #1F4068;
+  --border-hover: #2E5380;
   --sidebar-width: 280px;
   --player-height: 80px;
   --topbar-height: 64px;
