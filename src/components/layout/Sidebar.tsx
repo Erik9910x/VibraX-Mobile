@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Search, Library, Heart, User, Plus, Music, Menu, X, MoreHorizontal, Pin, Edit2, Share2, Trash2 } from 'lucide-react';
+import { Home, Search, Library, Heart, User, Plus, Music, Menu, X, MoreVertical, Pin, Edit2, Share2, Trash2 } from 'lucide-react';
 import { usePlaylistStore, useArtistStore } from '@/lib/store';
 import { cn, artistUrl, artistNameToId } from '@/lib/utils';
 import { useState, createContext, useContext, useRef, useEffect } from 'react';
@@ -97,11 +97,11 @@ function SidebarPlaylistItem({ playlist, pathname, onToggle }: any) {
         <button
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowMenu(!showMenu); }}
           className={cn(
-            "w-8 h-8 rounded-md flex items-center justify-center transition-all",
-            showMenu ? "opacity-100 bg-white/10" : "opacity-0 group-hover:opacity-100 hover:bg-white/10"
+            "w-7 h-7 rounded-md flex items-center justify-center transition-all",
+            showMenu ? "bg-white/10" : "hover:bg-white/10"
           )}
         >
-          <MoreHorizontal className="w-4 h-4 text-white/60 hover:text-white" />
+          <MoreVertical className="w-4 h-4 text-white/50 hover:text-white" />
         </button>
         
         {showMenu && (

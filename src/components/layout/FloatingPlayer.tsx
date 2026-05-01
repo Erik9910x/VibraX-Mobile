@@ -384,7 +384,7 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 100 }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-40 bg-gradient-to-br from-gray-900 to-black pb-[var(--player-height)] flex flex-col md:flex-row overflow-hidden"
+            className="fixed inset-0 z-40 bg-gradient-to-br from-gray-900 to-black pb-[calc(var(--player-height)+72px)] lg:pb-[var(--player-height)] flex flex-col md:flex-row overflow-hidden"
           >
             {/* Background Blur Effect */}
             <div 
@@ -400,8 +400,8 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
               <ChevronDown className="w-6 h-6 group-hover:translate-y-0.5 transition-transform" />
             </button>
 
-            {/* Left Column: Album Art */}
-            <div className="flex-1 w-full md:w-1/2 flex items-center justify-center p-12 relative z-10 flex-col md:border-r border-white/10">
+            {/* Left Column: Album Art — HIDDEN on mobile, visible on tablet (md+) */}
+            <div className="hidden md:flex flex-1 w-1/2 items-center justify-center p-12 relative z-10 flex-col border-r border-white/10">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 src={currentTrack.imageUrl} 
@@ -417,7 +417,17 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
               </div>
             </div>
 
-            {/* Right Column: Scrolling Lyrics */}
+            {/* Mobile-only: compact track info bar at top */}
+            <div className="flex md:hidden items-center gap-3 px-6 pt-16 pb-4 relative z-10">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={currentTrack.imageUrl} alt="" className="w-12 h-12 rounded-lg object-cover shadow-lg" />
+              <div className="min-w-0 flex-1">
+                <p className="text-base font-bold text-white truncate">{currentTrack.title}</p>
+                <p className="text-sm text-white/40 truncate">{currentTrack.artist}</p>
+              </div>
+            </div>
+
+            {/* Lyrics Column: full width on mobile, half on tablet+ */}
             <div className="flex-1 w-full md:w-1/2 relative bg-black/20 backdrop-blur-md z-10">
               <div 
                 ref={lyricsContainerRef}
@@ -521,9 +531,13 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
 
           {/* Center: Playback Controls */}
           <div className="flex-[2] flex flex-col items-center justify-center gap-1 w-[40%] sm:w-[50%]">
-            <div className="flex items-center gap-3 sm:gap-5">
+            <div className="flex items-center gap-2 sm:gap-4">
               <button onClick={toggleShuffle} className={cn('hidden sm:flex w-7 h-7 items-center justify-center rounded-full transition-colors', isShuffled ? 'text-[#fcd535]' : 'text-white/30 hover:text-white/60')}>
                 <Shuffle className="w-4 h-4" />
+              </button>
+
+              <button onClick={() => skipTime(-15)} className="hidden sm:flex w-6 h-6 items-center justify-center text-white/40 hover:text-white/70 transition-colors" title="-15s">
+                <RotateCcw className="w-4 h-4" />
               </button>
               
               <button onClick={previous} className="w-7 h-7 flex items-center justify-center text-white/60 hover:text-white transition-colors">
@@ -536,6 +550,10 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
 
               <button onClick={next} className="w-7 h-7 flex items-center justify-center text-white/60 hover:text-white transition-colors">
                 <SkipForward className="w-[18px] h-[18px] fill-current" />
+              </button>
+
+              <button onClick={() => skipTime(15)} className="hidden sm:flex w-6 h-6 items-center justify-center text-white/40 hover:text-white/70 transition-colors" title="+15s">
+                <RotateCw className="w-4 h-4" />
               </button>
 
               <button onClick={toggleRepeat} className={cn('hidden sm:flex w-7 h-7 items-center justify-center rounded-full transition-colors', repeatMode !== 'off' ? 'text-[#fcd535]' : 'text-white/30 hover:text-white/60')}>
