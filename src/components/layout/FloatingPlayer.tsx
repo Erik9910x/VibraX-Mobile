@@ -240,6 +240,7 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
         audio.currentTime = 0;
         setProgress(0);
         setTimeout(() => {
+          audio.load(); // Reset buffer for iOS stability
           audio.play().catch(() => {});
         }, 100);
       } else {
@@ -253,6 +254,7 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
           if (newState.currentTrack?.id === state.currentTrack?.id) {
             audio.currentTime = 0;
             setProgress(0);
+            audio.load(); // Reset buffer for iOS stability
             audio.play().catch(() => {});
           }
         }, 100);
