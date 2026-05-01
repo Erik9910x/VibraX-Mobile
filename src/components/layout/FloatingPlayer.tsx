@@ -642,10 +642,6 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
               <button onClick={() => skipTime(15)} className="hidden sm:flex w-6 h-6 items-center justify-center text-white/40 hover:text-white/70 transition-colors" title="+15s">
                 <RotateCw className="w-4 h-4" />
               </button>
-
-              <button onClick={toggleRepeat} className={cn('hidden sm:flex w-7 h-7 items-center justify-center rounded-full transition-colors', repeatMode !== 'off' ? 'text-[#fcd535]' : 'text-white/30 hover:text-white/60')}>
-                {repeatMode === 'one' ? <Repeat1 className="w-4 h-4" /> : <Repeat className="w-4 h-4" />}
-              </button>
             </div>
             
             {/* Timers */}
@@ -658,6 +654,17 @@ export default function FloatingPlayer({ onMenuClick }: { onMenuClick?: () => vo
 
           {/* Right: Extras */}
           <div className="flex items-center justify-end gap-1.5 sm:gap-2 w-[30%] sm:w-[25%]">
+            <button 
+              onClick={toggleRepeat} 
+              className={cn(
+                'flex w-7 h-7 sm:w-8 sm:h-8 items-center justify-center rounded-full transition-all',
+                repeatMode !== 'off' ? 'text-[#fcd535] bg-[#fcd535]/10' : 'text-white/30 hover:text-white/80 hover:bg-white/5'
+              )}
+              title={repeatMode === 'one' ? 'Repeat One' : repeatMode === 'all' ? 'Repeat All' : 'Repeat Off'}
+            >
+              {repeatMode === 'one' ? <Repeat1 className="w-4 h-4" /> : <Repeat className="w-4 h-4" />}
+            </button>
+
             <button
               onClick={handleDownload}
               disabled={isDownloading}
